@@ -1,4 +1,9 @@
-from django.http import HttpResponse
+from django.views.generic import TemplateView
 
-def home(request):
-    return HttpResponse("¡Bienvenido a mi blog de mascotas!")
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+
+
+""" def home(request):
+    return HttpResponse("¡Bienvenido a mi blog de mascotas!") """
