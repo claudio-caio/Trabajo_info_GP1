@@ -1,0 +1,117 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Editar artículo{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="mb-3">Editar artículo</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Mostrar errores generales -->
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <!-- TÍTULO -->
+        <div class="mb-3">
+            <label class="form-label">Título</label>
+            {{ form.titulo }}
+            {% for error in form.titulo.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="mb-3">
+            <label class="form-label">Contenido</label>
+            {{ form.contenido }}
+            {% for error in form.contenido.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            {{ form.categoria }}
+            {% for error in form.categoria.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- SUBIR NUEVAS IMÁGENES -->
+        <div class="mb-3">
+            <label class="form-label">Agregar imágenes</label>
+            <input type="file" name="imagenes" accept="image/*" multiple class="form-control">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Guardar cambios</button>
+        <a href="{% url 'posts:articulo_detalle' object.pk %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+    <hr class="my-4">
+
+    <!-- IMÁGENES ACTUALES -->
+    <h4>Imágenes actuales</h4>
+
+    {% if object.imagenes.all %}
+        <div class="row">
+            {% for img in object.imagenes.all %}
+                <div class="col-md-3 text-center mb-3" id="img-{{ img.id }}">
+                    <img src="{{ img.imagen.url }}" class="img-fluid rounded shadow-sm mb-2">
+
+                    <button 
+                        class="btn btn-danger btn-sm eliminar-imagen" 
+                        data-id="{{ img.id }}">
+                        Eliminar
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No hay imágenes cargadas.</p>
+    {% endif %}
+
+</div>
+
+<!-- AJAX para eliminar imágenes -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const botones = document.querySelectorAll(".eliminar-imagen");
+
+    botones.forEach(boton => {
+        boton.addEventListener("click", function() {
+            const idImagen = this.dataset.id;
+
+            if (!confirm("¿Seguro que deseas eliminar esta imagen?")) return;
+
+            fetch("{% url 'posts:eliminar_imagen' 0 %}".replace('0', idImagen), {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exito) {
+                    document.getElementById("img-" + idImagen).remove();
+                } else {
+                    alert(data.error || "Error al eliminar la imagen.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    });
+});
+</script>
+
+{% endblock content %}

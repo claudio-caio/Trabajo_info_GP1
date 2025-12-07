@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, UpdateView
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,7 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RegistroUsuarioForm, PerfilUsuarioForm
 from .models import Usuario
 
-# Create your views here.
 # Registro de usuario
 class RegistroUsuarioView(View):
     form_class = RegistroUsuarioForm
@@ -65,20 +64,21 @@ class LoginUsuarioView(View):
         messages.error(request, "Nombre de usuario o contraseña incorrectos.")
         return render(request, self.template_name, {'form': form})
 
-# Perfil detalle y edición
-class PerfilDetalleView(LoginRequiredMixin, UpdateView):
+# Perfil detalle
+class PerfilDetalleView(LoginRequiredMixin, TemplateView):
     template_name = 'usuarios/perfil.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['usuario'] = self.request.user
         return context
-    
+
+# Edición de perfil
 class PerfilUsuarioView(LoginRequiredMixin, UpdateView):
     model = Usuario
     form_class = PerfilUsuarioForm
     template_name = 'usuarios/editar_perfil.html'
-    success_url = reverse_lazy('usuarios:perfil')
+    success_url = reverse_lazy('usuarios:profile')  # <--- corregido
     
     def get_object(self, queryset=None):
         return self.request.user
@@ -99,12 +99,12 @@ class EliminarCuentaView(LoginRequiredMixin, View):
         messages.success(request, "Tu cuenta ha sido eliminada exitosamente.")
         return redirect('index')
 
-# Logout de usuario
+
+# Logout con confirmación
 class LogoutUsuarioView(LoginRequiredMixin, TemplateView):
     template_name = 'usuarios/logout.html'
-    
+
     def post(self, request):
         logout(request)
-        messages.success(request, "Has cerrado sesión exitosamente.")
+        messages.success(request, "Has cerrado sesión correctamente")
         return redirect('index')
-    

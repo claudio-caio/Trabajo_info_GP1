@@ -1,0 +1,42 @@
+{% extends 'layouts/base-layout.html' %}
+
+{% block title_layout %}
+  PetBlog |
+  {% block title %} BLOG {% endblock title %}
+{% endblock title_layout %}
+
+{% block content_layout %}
+  {% include 'components/commons/header.html' %}
+
+  <!-- Fondo general suave y amigable -->
+  <main class="flex justify-center min-h-[calc(100dvh_-_56px_-_56px)] px-4 md:px-10 lg:px-40 
+              bg-gradient-to-b from-amber-100 via-orange-50 to-amber-100 py-10">
+
+    <!-- Contenedor central estilo "tarjeta" tipo blog -->
+    <div class="container max-w-15xl bg-white/90 shadow-xl rounded-2xl p-6 md:p-10 border border-amber-200">
+
+      {% block content %}
+      ⚠️ Carga un contenido
+      {% endblock content %}
+
+    </div>
+  </main>
+
+  {% block scripts %}
+  <!-- Script del navbar -->
+  <script>
+    const toggle = document.getElementById("nav-toggle");
+    const menu = document.getElementById("mobile-menu");
+
+    if (toggle && menu) {
+      toggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    }
+  </script>
+  {% endblock scripts %}
+
+  {% include 'components/commons/footer.html' %}
+{% endblock content_layout %}
+
+  

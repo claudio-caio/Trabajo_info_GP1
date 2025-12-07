@@ -1,0 +1,15 @@
+{% extends 'layouts/base-layout.html' %}
+
+{% block title_layout %}
+  IA |
+  {% block title %} BLOG {% endblock title %}
+    
+{% endblock title_layout %}
+
+{% block content_layout %}
+  {% include 'components/commons/header.html' %}
+
+  {% block content %} ⚠️ carga un contenido {% endblock content %}
+    
+{% endblock content_layout %}
+  

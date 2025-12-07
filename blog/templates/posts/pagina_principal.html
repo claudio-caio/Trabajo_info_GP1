@@ -1,0 +1,29 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Página principal{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h1 class="mb-4">Bienvenido al Blog</h1>
+
+    <p class="lead">
+        Este proyecto permite crear, editar y explorar artículos con imágenes y comentarios.
+    </p>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Estadísticas generales</h5>
+            <p class="card-text">
+                Total de vistas acumuladas: 
+                <strong>{{ total_vistas }}</strong>
+            </p>
+
+            <a href="{% url 'posts:articulo_lista' %}" class="btn btn-primary">
+                Ver artículos
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

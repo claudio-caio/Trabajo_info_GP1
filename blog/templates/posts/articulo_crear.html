@@ -1,0 +1,71 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Crear artículo{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Crear nuevo artículo</h2>
+
+    <!-- Mostrar mensajes (éxito, error, etc.) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Errores no asociados a campos -->
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <!-- Campos del formulario -->
+        <div class="mb-3">
+            <label class="form-label">Título</label>
+            {{ form.titulo }}
+            {% for error in form.titulo.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contenido</label>
+            {{ form.contenido }}
+            {% for error in form.contenido.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            {{ form.categoria }}
+            {% for error in form.categoria.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Input de imágenes -->
+        <div class="mb-3">
+            <label class="form-label">Imágenes (puedes subir varias)</label>
+            <input type="file" name="imagenes" accept="image/*" multiple class="form-control">
+            {% if form.titulo.errors %}
+                <!-- Los errores se cargan en titulo por tu validación -->
+                <div class="text-danger mt-2">
+                    {% for error in form.titulo.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear artículo</button>
+        <a href="{% url 'posts:articulo_lista' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+{% endblock content %}

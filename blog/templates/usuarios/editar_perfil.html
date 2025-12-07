@@ -1,0 +1,65 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Editar Perfil{% endblock title %}
+
+{% block content %}
+<div class="editar-perfil-container" 
+     style="max-width:600px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+
+    <h2 style="text-align:center; margin-bottom:20px;">Editar Perfil</h2>
+
+    <!-- Mensajes de Django -->
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding:10px; margin-bottom:10px; border-radius:5px; color:white; background-color:
+                {% if message.tags == 'success' %}green
+                {% elif message.tags == 'error' %}red
+                {% else %}gray
+                {% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+
+        <!-- Mostrar errores generales del formulario -->
+        {% if form.non_field_errors %}
+            <div style="color:red; margin-bottom:10px;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <!-- Renderizado de campos -->
+        {% for field in form %}
+            <div style="margin-bottom:15px;">
+                <label style="font-weight:bold;">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.errors %}
+                    <div style="color:red; font-size:0.9em;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit"
+                style="width:100%; padding:12px; background:#007bff; color:white; 
+                       border:none; border-radius:5px; cursor:pointer;">
+            Guardar Cambios
+        </button>
+    </form>
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{% url 'usuarios:profile' %}" 
+           style="color:#007bff; text-decoration:none;">
+           Volver a mi perfil
+        </a>
+    </div>
+
+</div>
+{% endblock content %}
+
+{% endblock content %}
