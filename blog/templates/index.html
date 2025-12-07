@@ -1,11 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>sssssssssssssss</h1>
-</body>
-</html>
+{% extends 'layouts/general-layout.html' %}
+
+{% load static %}
+{% block title %} Inicio {% endblock title %}
+
+{% block content %} 
+
+<!-- Encabezado -->
+<div class="text-center my-12 px-4">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-brand mb-3">
+    Aprende, Comparte y Cuida a tu Mascota
+  </h2>
+  <p class="text-gray-700 max-w-3xl mx-auto text-lg">
+    Bienvenido al Blog de Mascotas, donde encontrarás consejos, historias,
+    cuidados, productos y experiencias reales de dueños y amantes de los animales.
+  </p>
+</div>
+
+<div class="max-w-7xl mx-auto px-4">
+
+  <!-- BLOQUE 1 -->
+  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
+    
+    <!-- Imagen -->
+    <img
+      src="{% static 'img/infovector.png' %}"
+      alt="Mascotas felices"
+      class="rounded-2xl shadow-lg w-full object-cover"
+    />
+
+    <!-- Texto -->
+    <div>
+      <h3 class="text-2xl font-bold text-brand mb-3">Historias y Proyectos</h3>
+      <p class="text-gray-600 leading-relaxed">
+        Descubre historias de adopciones, rescates y proyectos solidarios que
+        mejoran la vida de cientos de mascotas. Cada relato inspira y enseña
+        a ser mejores cuidadores.
+      </p>
+    </div>
+  </div>
+
+<!-- BLOQUE 2 -->
+<div class="grid md:grid-cols-2 gap-10 items-center mb-16">
+    
+    <!-- Texto (izquierda) -->
+    <div class="order-2 md:order-1">
+      <h3 class="text-2xl font-bold text-brand mb-3">Guías y Cuidados</h3>
+      <p class="text-gray-600 leading-relaxed">
+        Aprende sobre baños, vacunas, alimentación y entrenamiento.
+        Nuestros tutoriales te ayudarán a crear hábitos saludables y mejorar
+        la calidad de vida de tu mascota.
+      </p>
+    </div>
+
+    <!-- Imagen (derecha) -->
+    <img
+      src="{% static 'img/infovector.png' %}"
+      alt="Cuidado de mascotas"
+      class="rounded-2xl shadow-lg w-full object-cover order-1 md:order-2"
+    />
+
+</div>
+
+
+  <!-- BLOQUE 3 -->
+  <div class="grid md:grid-cols-2 gap-10 items-center mb-16">
+    
+    <!-- Imagen -->
+    <img
+      src="{% static 'img/infovector.png' %}"
+      alt="Comunidad de mascotas"
+      class="rounded-2xl shadow-lg w-full object-cover"
+    />
+
+    <!-- Texto -->
+    <div>
+      <h3 class="text-2xl font-bold text-brand mb-3">Comunidad PetLovers</h3>
+      <p class="text-gray-600 leading-relaxed">
+        Únete a una comunidad donde puedes hacer preguntas, compartir consejos,
+        publicar fotos de tus mascotas y ayudar a otros dueños con tus experiencias.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

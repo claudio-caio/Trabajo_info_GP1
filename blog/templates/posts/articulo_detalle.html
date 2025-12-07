@@ -1,0 +1,89 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}{{ articulo.titulo }}{% endblock title %}
+
+{% block content %}
+
+<div style="max-width:900px; margin:40px auto;">
+
+    <!-- Título -->
+    <h1 style="font-size:2rem; margin-bottom:10px;">{{ articulo.titulo }}</h1>
+
+    <!-- Meta información -->
+    <p style="color:#666; margin-bottom:20px;">
+        Por <strong>{{ articulo.autor.username }}</strong> · 
+        Categoría: <strong>{{ articulo.categoria.nombre }}</strong> · 
+        Publicado el {{ articulo.fecha_publicacion|date:"d/m/Y" }} · 
+        <strong>{{ articulo.visitas }} visitas</strong>
+    </p>
+
+    <!-- Imágenes -->
+    {% if articulo.imagenes.all %}
+        <div style="margin-bottom:25px;">
+            {% for img in articulo.imagenes.all %}
+                <img src="{{ img.imagen.url }}" 
+                     alt="Imagen del artículo"
+                     style="max-width:100%; margin-bottom:15px; border-radius:10px;">
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Contenido -->
+    <div style="font-size:1.1rem; line-height:1.7; margin-bottom:40px;">
+        {{ articulo.contenido|safe }}
+    </div>
+
+
+    <!-- Comentarios -->
+    <h3 style="margin-bottom:15px;">Comentarios</h3>
+
+    <!-- Lista de comentarios -->
+    <div style="margin-bottom:30px;">
+        {% if comentarios %}
+            {% for com in comentarios %}
+                <div style="border-bottom:1px solid #ddd; padding:10px 0;">
+                    <p style="margin:0;">
+                        <strong>{{ com.autor.username }}</strong> comentó:
+                    </p>
+                    <p style="margin:5px 0;">{{ com.contenido }}</p>
+                    <small style="color:#666;">
+                        {{ com.fecha_creacion|date:"d/m/Y H:i" }}
+                    </small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay comentarios todavía. ¡Sé el primero en comentar!</p>
+        {% endif %}
+    </div>
+
+
+    <!-- Formulario para agregar comentario -->
+    {% if user.is_authenticated %}
+        <h4>Agregar un comentario</h4>
+
+        <form method="post" style="margin-top:15px;">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+
+            <textarea name="contenido" 
+                      rows="4"
+                      placeholder="Escribe tu comentario..." 
+                      style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;"
+                      required></textarea>
+
+            <button type="submit"
+                    style="padding:10px 20px; background:#007bff; color:white; border:none;
+                           border-radius:5px; cursor:pointer;">
+                Comentar
+            </button>
+        </form>
+    {% else %}
+        <p>
+            <a href="{% url 'usuarios:login' %}">Inicia sesión</a> para comentar.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock content %}

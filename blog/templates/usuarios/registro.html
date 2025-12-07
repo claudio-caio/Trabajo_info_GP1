@@ -1,0 +1,63 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Registro{% endblock title %}
+
+{% block content %}
+<div style="max-width:600px; margin:40px auto; padding:20px; 
+            border:1px solid #ddd; border-radius:10px; 
+            box-shadow:0 0 10px rgba(0,0,0,0.1);">
+
+    <h2 style="text-align:center; margin-bottom:20px;">Crear Cuenta</h2>
+
+    <!-- Mensajes de Django -->
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding:10px; margin-bottom:10px; border-radius:5px; color:white; background-color:
+                {% if message.tags == 'success' %}green
+                {% elif message.tags == 'error' %}red
+                {% else %}gray
+                {% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Errores generales -->
+        {% if form.non_field_errors %}
+            <div style="color:red; margin-bottom:10px;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <!-- Renderizado de campos del formulario -->
+        {% for field in form %}
+            <div style="margin-bottom:15px;">
+                <label style="font-weight:bold;">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.errors %}
+                    <div style="color:red; font-size:0.9em;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit"
+                style="width:100%; padding:12px; background:#28a745; 
+                       border:none; border-radius:5px; color:white; 
+                       font-size:1rem; cursor:pointer;">
+            Registrarme
+        </button>
+    </form>
+
+    <p style="text-align:center; margin-top:15px;">
+        ¿Ya tienes cuenta?
+        <a href="{% url 'usuarios:login' %}" style="color:#007bff;">Inicia sesión aquí</a>.
+    </p>
+
+</div>
+{% endblock content %}

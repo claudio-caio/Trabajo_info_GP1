@@ -1,0 +1,67 @@
+{% extends 'layouts/general-layout.html' %}
+
+{% block title %}Posts{% endblock title %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Lista de Posts</h1>
+
+  <!-- Filtros y Ordenamiento -->
+  <div class="filtros">
+    <form method="get">
+      <!-- Selección de categoría -->
+      <select name="categoria" onchange="this.form.submit()">
+        <option value="">Todas las categorías</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" {% if request.GET.categoria == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <!-- Ordenamiento -->
+      <select name="ordenar_por" onchange="this.form.submit()">
+        <option value="">Ordenar por</option>
+        <option value="mas_recientes" {% if request.GET.ordenar_por == 'mas_recientes' %}selected{% endif %}>Más recientes</option>
+        <option value="mas_vistos" {% if request.GET.ordenar_por == 'mas_vistos' %}selected{% endif %}>Más vistos</option>
+        <option value="fecha_ascendente" {% if request.GET.ordenar_por == 'fecha_ascendente' %}selected{% endif %}>Fecha ascendente</option>
+        <option value="fecha_descendente" {% if request.GET.ordenar_por == 'fecha_descendente' %}selected{% endif %}>Fecha descendente</option>
+      </select>
+    </form>
+  </div>
+
+  <!-- Lista de artículos -->
+  <div class="articulos">
+    {% for articulo in articulos %}
+      <div class="articulo-card">
+        {% if articulo.imagenes.all %}
+          <img src="{{ articulo.imagenes.all.0.imagen.url }}" alt="{{ articulo.titulo }}" style="max-width:200px;">
+        {% endif %}
+        <h2><a href="{% url 'posts:detalle_articulo' articulo.pk %}">{{ articulo.titulo }}</a></h2>
+        <p>Autor: {{ articulo.autor.username }} | Fecha: {{ articulo.fecha_publicacion|date:"d/m/Y" }} | Vistas: {{ articulo.vistas }}</p>
+        <p>{{ articulo.descripcion|truncatewords:30 }}</p>
+        <a href="{% url 'posts:detalle_articulo' articulo.pk %}">Leer más</a>
+      </div>
+    {% empty %}
+      <p>No hay artículos para mostrar.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    <span class="step-links">
+      {% if articulos.has_previous %}
+        <a href="?{% if request.GET.categoria %}categoria={{ request.GET.categoria }}&{% endif %}{% if request.GET.ordenar_por %}ordenar_por={{ request.GET.ordenar_por }}&{% endif %}page={{ articulos.previous_page_number }}">Anterior</a>
+      {% endif %}
+
+      <span>Página {{ articulos.number }} de {{ articulos.paginator.num_pages }}</span>
+
+      {% if articulos.has_next %}
+        <a href="?{% if request.GET.categoria %}categoria={{ request.GET.categoria }}&{% endif %}{% if request.GET.ordenar_por %}ordenar_por={{ request.GET.ordenar_por }}&{% endif %}page={{ articulos.next_page_number }}">Siguiente</a>
+      {% endif %}
+    </span>
+  </div>
+
+</div>
+{% endblock content %}
