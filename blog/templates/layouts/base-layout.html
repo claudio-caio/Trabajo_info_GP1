@@ -15,18 +15,13 @@
 
   <!-- Tailwind custom theme -->
   <style type="text/tailwindcss">
-    @theme {
-      --breakpoint-xs: 30rem;
-      --color-primary: #cb0000ff;
-      --color-secondary: #aad90fff;
-    }
+    @theme { }
   </style>
 </head>
-
-<body class="min-w-[280px] bg-secondary">
-
-  {% block content_layout %}{% endblock content_layout %}
-
-
+<body >
+  {% block banner %}
+  {% endblock banner %}
+  {% block content_layout %}
+  {% endblock content_layout %}
 </body>
 </html>

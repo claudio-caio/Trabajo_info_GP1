@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'django_ckeditor_5', 
+    'widget_tweaks',
     
     'apps.posts', 
     'apps.usuarios', 
@@ -119,5 +120,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- CONFIGURACIÓN DE CKEDITOR 5 ---
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload'],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyleFull', 'imageStyleSide'],
+        },
+        'simpleUpload': {
+            'uploadUrl': '/posts/ckeditor/upload/',
+        },
+    },
+}
 
 # --- CONFIGURACIÓN DE LOGIN PERSONALIZADO ---

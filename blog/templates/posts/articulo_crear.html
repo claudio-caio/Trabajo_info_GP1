@@ -1,71 +1,178 @@
 {% extends 'layouts/general-layout.html' %}
-
+{% load static  %}
 {% block title %}Crear artículo{% endblock title %}
+
+
+{% block banner %}
+<section class="relative w-full h-[300px] md:h-[420px] lg:h-[500px] overflow-hidden">
+
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner-cargar-articulos.jpg' %}" 
+    alt="Banner del artículo"
+    class="w-full h-full object-cover"
+  >
+
+  <!-- Título centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="text-orange-600 text-3xl md:text-5xl font-extrabold drop-shadow-xl">
+      Mundo Mascotas
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
 
 {% block content %}
 
-<div class="container mt-4">
-    <h2 class="mb-3">Crear nuevo artículo</h2>
+<div class="max-w-4xl mx-auto px-4 py-10">
 
-    <!-- Mostrar mensajes (éxito, error, etc.) -->
+    <!-- Título -->
+    <h2 class="text-3xl font-bold text-orange-700 mb-6">Crear nuevo artículo</h2>
+
+    <!-- Mensajes -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            <div class="p-3 mb-4 rounded-lg 
+                {% if message.tags == 'success' %} bg-green-100 text-green-700 
+                {% elif message.tags == 'error' %} bg-red-100 text-red-700 
+                {% else %} bg-gray-100 text-gray-700 {% endif %}">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
 
-        <!-- Errores no asociados a campos -->
+        <!-- Errores generales -->
         {% if form.non_field_errors %}
-            <div class="alert alert-danger">
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg">
                 {{ form.non_field_errors }}
             </div>
         {% endif %}
 
-        <!-- Campos del formulario -->
-        <div class="mb-3">
-            <label class="form-label">Título</label>
+        <!-- TÍTULO -->
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Título</label>
             {{ form.titulo }}
             {% for error in form.titulo.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1 ">{{ error }}</p>
             {% endfor %}
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Contenido</label>
+        <!-- CONTENIDO -->
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Contenido</label>
             {{ form.contenido }}
             {% for error in form.contenido.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
             {% endfor %}
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Categoría</label>
+        <!-- CATEGORÍA -->
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Categoría</label>
             {{ form.categoria }}
             {% for error in form.categoria.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
             {% endfor %}
         </div>
 
-        <!-- Input de imágenes -->
-        <div class="mb-3">
-            <label class="form-label">Imágenes (puedes subir varias)</label>
-            <input type="file" name="imagenes" accept="image/*" multiple class="form-control">
-            {% if form.titulo.errors %}
-                <!-- Los errores se cargan en titulo por tu validación -->
-                <div class="text-danger mt-2">
-                    {% for error in form.titulo.errors %}
-                        {{ error }}
-                    {% endfor %}
+        <!-- SUBIR NUEVAS IMÁGENES -->
+        <div class="mb-6">
+            <label class="block font-semibold text-orange-700 text-lg mb-2">
+                Agregar imágenes (máximo 5)
+            </label>
+
+            <label 
+                id="drop-area"
+                class="flex flex-col items-center justify-center w-full h-40 
+                       border-2 border-dashed border-orange-300 rounded-2xl 
+                       bg-orange-50/60 hover:bg-orange-100 transition cursor-pointer
+                       shadow-sm hover:shadow-md relative"
+            >
+                <div class="flex flex-col items-center pointer-events-none">
+                    <!-- Icono -->
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                         viewBox="0 0 24 24" 
+                         fill="currentColor" 
+                         class="w-10 h-10 text-orange-500 mb-2">
+                        <path d="M12 16.5l-4-4h3V3h2v9.5h3l-4 4z" />
+                        <path d="M19 18H5v2h14v-2z" />
+                    </svg>
+
+                    <p class="text-orange-700 font-medium">Haz clic o arrastra imágenes aquí</p>
+                    <p class="text-gray-500 text-sm">Formatos permitidos: JPG, PNG, WEBP</p>
                 </div>
-            {% endif %}
+
+                <input 
+                    type="file" 
+                    name="imagenes"
+                    accept="image/*"
+                    multiple
+                    class="hidden"
+                    id="imagenes-input"
+                >
+            </label>
+
+            <!-- Contador de imágenes -->
+            <p class="text-gray-600 mt-2" id="contador-imagenes">0 imágenes seleccionadas</p>
+
+            <!-- Vista previa -->
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mt-4" id="preview-imagenes"></div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear artículo</button>
-        <a href="{% url 'posts:articulo_lista' %}" class="btn btn-secondary">Cancelar</a>
+        <!-- Botones -->
+        <div class="flex gap-4">
+            <button 
+                type="submit"
+                class="px-5 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg shadow transition"
+            >
+                Crear artículo
+            </button>
+
+            <a href="{% url 'posts:articulo_lista' %}"
+               class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg">
+               Cancelar
+            </a>
+        </div>
     </form>
+
 </div>
+
+<!-- Script vista previa de imágenes -->
+<script>
+const inputImagenes = document.getElementById("imagenes-input");
+const previewContainer = document.getElementById("preview-imagenes");
+const contador = document.getElementById("contador-imagenes");
+const MAX_IMAGENES = 5;
+
+inputImagenes.addEventListener("change", function() {
+    previewContainer.innerHTML = ""; // Limpiar preview
+    const archivos = Array.from(this.files);
+
+    if (archivos.length > MAX_IMAGENES) {
+        alert(`Solo puedes subir un máximo de ${MAX_IMAGENES} imágenes.`);
+        this.value = "";
+        contador.textContent = `0 imágenes seleccionadas`;
+        return;
+    }
+
+    // Actualizar contador
+    contador.textContent = `${archivos.length} imagen(es) seleccionada(s)`;
+
+    archivos.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.classList.add("rounded-xl", "shadow-sm", "w-full", "h-24", "object-cover");
+            previewContainer.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+    });
+});
+</script>
 
 {% endblock content %}

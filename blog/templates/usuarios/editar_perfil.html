@@ -1,65 +1,89 @@
 {% extends 'layouts/general-layout.html' %}
-
+{% load static %}
+{% load widget_tweaks %}
 {% block title %}Editar Perfil{% endblock title %}
 
-{% block content %}
-<div class="editar-perfil-container" 
-     style="max-width:600px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+{% block banner %}
+<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden ">
 
-    <h2 style="text-align:center; margin-bottom:20px;">Editar Perfil</h2>
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner.png' %}" 
+    alt="Banner principal del sitio"
+    fetchpriority="high"
+    loading="eager"
+    class="w-full h-full object-cover mt-3"
+  >
+
+  <!-- Contenido centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="ttext-orange-600 text-3xl md:text-5xl font-extrabold tracking-wide drop-shadow-lg">
+      Programa con Pasión
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10 p-6 bg-orange-50 rounded-3xl shadow-lg">
+
+    <h2 class="text-center text-3xl font-bold text-orange-700 mb-6">Editar Perfil</h2>
 
     <!-- Mensajes de Django -->
     {% if messages %}
         {% for message in messages %}
-            <div style="padding:10px; margin-bottom:10px; border-radius:5px; color:white; background-color:
-                {% if message.tags == 'success' %}green
-                {% elif message.tags == 'error' %}red
-                {% else %}gray
-                {% endif %};">
+            <div class="p-3 mb-4 rounded-lg text-white 
+                {% if message.tags == 'success' %} bg-green-500 
+                {% elif message.tags == 'error' %} bg-red-500 
+                {% else %} bg-gray-500 {% endif %}">
                 {{ message }}
             </div>
         {% endfor %}
     {% endif %}
 
-    <form method="post" enctype="multipart/form-data" novalidate>
+    <form method="post" enctype="multipart/form-data" novalidate class="space-y-5">
         {% csrf_token %}
 
-        <!-- Mostrar errores generales del formulario -->
+        <!-- Errores generales -->
         {% if form.non_field_errors %}
-            <div style="color:red; margin-bottom:10px;">
+            <div class="text-red-600 bg-red-100 p-3 rounded-lg">
                 {{ form.non_field_errors }}
             </div>
         {% endif %}
 
-        <!-- Renderizado de campos -->
+        <!-- Campos del formulario -->
         {% for field in form %}
-            <div style="margin-bottom:15px;">
-                <label style="font-weight:bold;">{{ field.label }}</label>
-                {{ field }}
-
+            <div class="flex flex-col">
+                <label class="font-semibold text-orange-700 mb-1">{{ field.label }}</label>
+                {{ field|add_class:"border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300" }}
+                {% if field.help_text %}
+                    <p class="text-sm text-gray-500 mt-1">{{ field.help_text }}</p>
+                {% endif %}
                 {% if field.errors %}
-                    <div style="color:red; font-size:0.9em;">
-                        {{ field.errors }}
-                    </div>
+                    <p class="text-red-600 text-sm mt-1">{{ field.errors }}</p>
                 {% endif %}
             </div>
         {% endfor %}
 
-        <button type="submit"
-                style="width:100%; padding:12px; background:#007bff; color:white; 
-                       border:none; border-radius:5px; cursor:pointer;">
+        <button type="submit" 
+                class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-2xl shadow-md transition">
             Guardar Cambios
         </button>
     </form>
 
-    <div style="text-align:center; margin-top:20px;">
-        <a href="{% url 'usuarios:profile' %}" 
-           style="color:#007bff; text-decoration:none;">
+    <!-- Enlaces adicionales -->
+    <div class="flex flex-col items-center mt-6 space-y-3">
+        <a href="{% url 'usuarios:perfil' %}" 
+           class="text-orange-600 hover:underline font-semibold">
            Volver a mi perfil
+        </a>
+        <a href="{% url 'usuarios:eliminar_cuenta' %}" 
+           class="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-2xl shadow-md transition">
+           Eliminar cuenta
         </a>
     </div>
 
 </div>
 {% endblock content %}
 
-{% endblock content %}

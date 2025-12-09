@@ -1,47 +1,78 @@
 {% extends 'layouts/general-layout.html' %}
-
+{% load static %}
 {% block title %}Mi Perfil{% endblock title %}
 
+{% block banner %}
+<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden ">
+
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner.png' %}" 
+    alt="Banner principal del sitio"
+    fetchpriority="high"
+    loading="eager"
+    class="w-full h-full object-cover mt-3"
+  >
+
+  <!-- Contenido centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="text-orange-600 text-3xl md:text-5xl font-extrabold tracking-wide drop-shadow-lg">
+      Programa con Pasión
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
+
 {% block content %}
-<div class="perfil-container" 
-     style="max-width:600px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+<div class="max-w-lg mx-auto mt-10 p-6 bg-orange-50 rounded-3xl shadow-lg">
 
-    <h2 style="text-align:center; margin-bottom:20px;">Mi Perfil</h2>
+    <h2 class="text-center text-3xl font-bold text-orange-700 mb-6">Mi Perfil</h2>
 
-    <div style="text-align:center; margin-bottom:20px;">
+    <!-- FOTO DE PERFIL -->
+    <div class="flex justify-center mb-6">
         {% if usuario.foto_perfil %}
             <img src="{{ usuario.foto_perfil.url }}" 
                  alt="Foto de perfil"
-                 style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid #ccc;">
+                 class="w-32 h-32 rounded-full object-cover border-4 border-orange-200 shadow-lg">
         {% else %}
             <img src="https://via.placeholder.com/120" 
                  alt="Sin foto"
-                 style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid #ccc;">
+                 class="w-32 h-32 rounded-full object-cover border-4 border-orange-200 shadow-lg">
         {% endif %}
     </div>
 
-    <div style="font-size:1.1rem; line-height:1.7;">
-        <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
-        <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <!-- DATOS DEL USUARIO -->
+    <div class="text-gray-800 space-y-3 text-lg">
+        <p><span class="font-semibold text-orange-600">Nombre de usuario:</span> {{ usuario.username }}</p>
+        <p><span class="font-semibold text-orange-600">Email:</span> {{ usuario.email }}</p>
 
         {% if usuario.first_name or usuario.last_name %}
-            <p><strong>Nombre completo:</strong> {{ usuario.first_name }} {{ usuario.last_name }}</p>
+            <p>
+                <span class="font-semibold text-orange-600">Nombre completo:</span>
+                {{ usuario.first_name }} {{ usuario.last_name }}
+            </p>
         {% endif %}
 
         {% if usuario.fecha_nacimiento %}
-            <p><strong>Fecha de nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
+            <p><span class="font-semibold text-orange-600">Fecha de nacimiento:</span> {{ usuario.fecha_nacimiento }}</p>
         {% endif %}
 
         {% if usuario.biografia %}
-            <p><strong>Biografía:</strong><br>{{ usuario.biografia }}</p>
+            <p>
+                <span class="font-semibold text-orange-600">Biografía:</span><br>
+                {{ usuario.biografia }}
+            </p>
         {% endif %}
     </div>
 
-    <div style="text-align:center; margin-top:25px;">
+    <!-- BOTÓN EDITAR PERFIL -->
+    <div class="text-center mt-6">
         <a href="{% url 'usuarios:editar_perfil' %}" 
-           style="padding:10px 25px; background:#007bff; color:white; border-radius:5px; text-decoration:none;">
+           class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-3 rounded-2xl transition shadow-md hover:shadow-lg">
             Editar Perfil
         </a>
     </div>
 
 </div>
+{% endblock content %}

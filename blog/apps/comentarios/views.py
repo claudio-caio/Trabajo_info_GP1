@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -14,7 +14,7 @@ class ComentarioCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.autor = self.request.user
-        form.instance.articulo = get_list_or_404(Articulo, pk=self.kwargs['articulo_pk'])
+        form.instance.articulo = get_object_or_404(Articulo, pk=self.kwargs['articulo_pk'])
         return super().form_valid(form)
     
     def get_success_url(self):

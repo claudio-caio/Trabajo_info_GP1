@@ -1,37 +1,54 @@
 {% extends 'layouts/general-layout.html' %}
-
+{% load static %}
 {% block title %}Cerrar Sesión{% endblock title %}
+{% block banner %}
+<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden ">
+
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner.png' %}" 
+    alt="Banner principal del sitio"
+    fetchpriority="high"
+    loading="eager"
+    class="w-full h-full object-cover mt-3"
+  >
+
+  <!-- Contenido centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="text-orange-600 text-3xl md:text-5xl font-extrabold tracking-wide drop-shadow-lg">
+      Programa con Pasión
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
 
 {% block content %}
-<div style="max-width:500px; margin:50px auto; padding:25px; 
-            border:1px solid #ddd; border-radius:10px; 
-            box-shadow:0 0 10px rgba(0,0,0,0.1);">
+<div class="max-w-md mx-auto mt-20 p-8 bg-white rounded-2xl shadow-lg">
 
-    <h2 style="text-align:center; color:#333; margin-bottom:20px;">
+    <h2 class="text-center text-2xl font-semibold text-gray-800 mb-4">
         ¿Deseas cerrar sesión?
     </h2>
 
-    <p style="text-align:center; margin-bottom:25px; font-size:1.1rem;">
+    <p class="text-center text-gray-600 mb-6 text-lg">
         Confirma que quieres salir de tu cuenta.
     </p>
 
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" 
-                style="width:100%; padding:12px; 
-                       background:#007bff; color:white; 
-                       border:none; border-radius:5px; 
-                       cursor:pointer; font-size:1rem; margin-bottom:15px;">
-            Sí, cerrar sesión
-        </button>
-    </form>
+    <div class="flex flex-col gap-4">
+        <form method="post" class="w-full">
+            {% csrf_token %}
+            <button type="submit" 
+                    class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition-all">
+                Sí, cerrar sesión
+            </button>
+        </form>
 
-    <div style="text-align:center;">
         <a href="{% url 'index' %}" 
-           style="text-decoration:none; color:#555;">
+           class="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-2xl shadow-md transition-all text-center">
            Cancelar
         </a>
     </div>
 
 </div>
 {% endblock content %}
+
