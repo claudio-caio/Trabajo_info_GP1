@@ -7,7 +7,6 @@ from .views import (
     ArticuloUpdateView,
     ArticuloDeleteView,
     eliminar_imagen_articulo,
-    ckeditor5_subir_imagen,
 )
 
 app_name = 'posts'
@@ -25,9 +24,6 @@ urlpatterns = [
 
     # Eliminar imágenes por AJAX
     path('imagenes/<int:pk>/eliminar/', eliminar_imagen_articulo, name='eliminar_imagen_articulo'),
-
-    # Subida de imágenes CKEditor5
-    path('ckeditor/upload/', ckeditor5_subir_imagen, name='ckeditor5_subir_imagen'),
 
     # Comentarios (delegados al app comentarios)
     path('comentarios/', include('apps.comentarios.urls')),

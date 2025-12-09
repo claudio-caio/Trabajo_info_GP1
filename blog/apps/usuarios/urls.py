@@ -20,8 +20,10 @@ urlpatterns = [
     # Logout
     path('logout/', LogoutUsuarioView.as_view(), name='logout'),
 
-    # Perfil (detalle y edición)
-    path('perfil/', PerfilDetalleView.as_view(), name='profile'),  # <--- nombre corregido
+    # Perfil
+    path('perfil/', PerfilDetalleView.as_view(), name='perfil'),
+
+    # Editar perfil
     path('perfil/editar/', PerfilUsuarioView.as_view(), name='editar_perfil'),
 
     # Eliminación de cuenta

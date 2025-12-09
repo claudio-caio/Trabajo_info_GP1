@@ -14,6 +14,6 @@ class ComentarioPermisoMixin(UserPassesTestMixin):
         
     def get_success_url(self):
         return reverse_lazy(
-            'blog:detalle_articulo',
+            'posts:articulo_detalle',
             kwargs={'pk': self.object.articulo.pk}
         )

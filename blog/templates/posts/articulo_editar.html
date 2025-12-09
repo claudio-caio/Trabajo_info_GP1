@@ -1,115 +1,227 @@
 {% extends 'layouts/general-layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block banner %}
+<section class="relative w-full h-[300px] md:h-[420px] lg:h-[500px] overflow-hidden">
+
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner_articulo.jpg' %}" 
+    alt="Banner del artículo"
+    class="w-full h-full object-cover"
+  >
+
+  <!-- Título centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="text-orange-600 text-3xl md:text-5xl font-extrabold drop-shadow-xl">
+      Mundo Mascotas
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
 
 {% block title %}Editar artículo{% endblock title %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="max-w-4xl mx-auto px-4 py-10">
 
-    <h2 class="mb-3">Editar artículo</h2>
+    <!-- Título -->
+    <h2 class="text-3xl font-bold text-orange-700 mb-6">Editar artículo</h2>
 
+    <!-- Mensajes -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            <div class="p-3 mb-4 rounded-lg 
+                {% if message.tags == 'success' %} bg-green-100 text-green-700 
+                {% elif message.tags == 'error' %} bg-red-100 text-red-700 
+                {% else %} bg-gray-100 text-gray-700 {% endif %}">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
 
-        <!-- Mostrar errores generales -->
+        <!-- Errores generales -->
         {% if form.non_field_errors %}
-            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg">
+                {{ form.non_field_errors }}
+            </div>
         {% endif %}
 
         <!-- TÍTULO -->
-        <div class="mb-3">
-            <label class="form-label">Título</label>
-            {{ form.titulo }}
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Título</label>
+            {{ form.titulo|add_class:"w-full border border-gray-300 rounded-lg p-2" }}
             {% for error in form.titulo.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
             {% endfor %}
         </div>
 
         <!-- CONTENIDO -->
-        <div class="mb-3">
-            <label class="form-label">Contenido</label>
-            {{ form.contenido }}
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Contenido</label>
+            {{ form.contenido|add_class:"w-full border border-gray-300 rounded-lg p-2" }}
             {% for error in form.contenido.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
             {% endfor %}
         </div>
 
         <!-- CATEGORÍA -->
-        <div class="mb-3">
-            <label class="form-label">Categoría</label>
-            {{ form.categoria }}
+        <div>
+            <label class="block font-semibold text-gray-800 mb-1">Categoría</label>
+            {{ form.categoria|add_class:"w-full border border-gray-300 rounded-lg p-2" }}
             {% for error in form.categoria.errors %}
-                <div class="text-danger">{{ error }}</div>
+                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
             {% endfor %}
         </div>
 
         <!-- SUBIR NUEVAS IMÁGENES -->
-        <div class="mb-3">
-            <label class="form-label">Agregar imágenes</label>
-            <input type="file" name="imagenes" accept="image/*" multiple class="form-control">
+        <div class="mb-6">
+            <label class="block font-semibold text-orange-700 text-lg mb-2">
+                Agregar imágenes (máximo 5)
+            </label>
+
+            <!-- Contenedor drag & drop -->
+            <label 
+                id="drop-area"
+                class="flex flex-col items-center justify-center w-full h-40 
+                       border-2 border-dashed border-orange-300 rounded-2xl 
+                       bg-orange-50/60 hover:bg-orange-100 transition cursor-pointer
+                       shadow-sm hover:shadow-md relative"
+            >
+                <div class="flex flex-col items-center pointer-events-none">
+                    <!-- Icono -->
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                         viewBox="0 0 24 24" 
+                         fill="currentColor" 
+                         class="w-10 h-10 text-orange-500 mb-2">
+                        <path d="M12 16.5l-4-4h3V3h2v9.5h3l-4 4z" />
+                        <path d="M19 18H5v2h14v-2z" />
+                    </svg>
+
+                    <p class="text-orange-700 font-medium">Haz clic o arrastra imágenes aquí</p>
+                    <p class="text-gray-500 text-sm">Formatos permitidos: JPG, PNG, WEBP</p>
+                </div>
+
+                <input 
+                    type="file" 
+                    name="imagenes"
+                    accept="image/*"
+                    multiple
+                    class="hidden"
+                    id="imagenes-input"
+                >
+            </label>
+
+            <!-- Contador de imágenes -->
+            <p class="text-gray-600 mt-2" id="contador-imagenes">0 imágenes seleccionadas</p>
+
+            <!-- Vista previa -->
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mt-4" id="preview-imagenes"></div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Guardar cambios</button>
-        <a href="{% url 'posts:articulo_detalle' object.pk %}" class="btn btn-secondary">Cancelar</a>
+        <!-- Botones -->
+        <div class="flex gap-4">
+            <button 
+                class="px-5 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg shadow transition"
+                type="submit">
+                Guardar cambios
+            </button>
+
+            <a href="{% url 'posts:articulo_detalle' object.pk %}"
+               class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg">
+               Cancelar
+            </a>
+        </div>
     </form>
 
-    <hr class="my-4">
+    <hr class="my-8">
 
     <!-- IMÁGENES ACTUALES -->
-    <h4>Imágenes actuales</h4>
+    <h4 class="text-2xl font-semibold text-gray-800 mb-4">Imágenes actuales</h4>
 
     {% if object.imagenes.all %}
-        <div class="row">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             {% for img in object.imagenes.all %}
-                <div class="col-md-3 text-center mb-3" id="img-{{ img.id }}">
-                    <img src="{{ img.imagen.url }}" class="img-fluid rounded shadow-sm mb-2">
+                <div class="text-center bg-white p-3 rounded-lg shadow relative" id="img-{{ img.id }}">
+                    <img src="{{ img.imagen.url }}" class="rounded-lg w-full h-32 object-cover mb-2 shadow">
 
                     <button 
-                        class="btn btn-danger btn-sm eliminar-imagen" 
+                        class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded eliminar-imagen absolute top-2 right-2"
                         data-id="{{ img.id }}">
-                        Eliminar
+                        ✕
                     </button>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <p class="text-muted">No hay imágenes cargadas.</p>
+        <p class="text-gray-600">No hay imágenes cargadas.</p>
     {% endif %}
 
 </div>
 
-<!-- AJAX para eliminar imágenes -->
+<!-- Scripts -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const botones = document.querySelectorAll(".eliminar-imagen");
+const inputImagenes = document.getElementById("imagenes-input");
+const previewContainer = document.getElementById("preview-imagenes");
+const contador = document.getElementById("contador-imagenes");
+const MAX_IMAGENES = 5;
 
-    botones.forEach(boton => {
-        boton.addEventListener("click", function() {
-            const idImagen = this.dataset.id;
+inputImagenes.addEventListener("change", function() {
+    previewContainer.innerHTML = ""; // Limpiar preview
+    const archivos = Array.from(this.files);
 
-            if (!confirm("¿Seguro que deseas eliminar esta imagen?")) return;
+    if (archivos.length > MAX_IMAGENES) {
+        alert(`Solo puedes subir un máximo de ${MAX_IMAGENES} imágenes.`);
+        this.value = ""; // Limpiar selección
+        contador.textContent = `0 imágenes seleccionadas`;
+        return;
+    }
 
-            fetch("{% url 'posts:eliminar_imagen' 0 %}".replace('0', idImagen), {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.exito) {
-                    document.getElementById("img-" + idImagen).remove();
-                } else {
-                    alert(data.error || "Error al eliminar la imagen.");
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        });
+    contador.textContent = `${archivos.length} imagen(es) seleccionada(s)`;
+
+    archivos.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgWrapper = document.createElement("div");
+            imgWrapper.classList.add("relative");
+
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.classList.add("rounded-xl", "shadow-sm", "w-full", "h-24", "object-cover");
+
+            imgWrapper.appendChild(img);
+            previewContainer.appendChild(imgWrapper);
+        }
+        reader.readAsDataURL(file);
+    });
+});
+
+// AJAX eliminar imágenes actuales
+document.querySelectorAll(".eliminar-imagen").forEach(button => {
+    button.addEventListener("click", function() {
+        const idImagen = this.dataset.id;
+        if (!confirm("¿Seguro que deseas eliminar esta imagen?")) return;
+
+        fetch("{% url 'posts:eliminar_imagen_articulo' 0 %}".replace('0', idImagen), {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.exito) {
+                document.getElementById("img-" + idImagen).remove();
+            } else {
+                alert(data.error || "Error al eliminar la imagen.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
     });
 });
 </script>

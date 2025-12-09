@@ -1,52 +1,44 @@
 from django import forms
 from .models import Articulo
 from django.core.exceptions import ValidationError
-from django.forms import Textarea as CKEditorUploadingWidget
 
-_widget_candidates = (
-    'ckeditor_uploader.widgets.CKEditorUploadingWidget',
-    'ckeditor.widgets.CKEditorWidget',
-    'django_ckeditor_5.widgets.CKEditor5Widget',
-    'django_ckeditor_5.widgets.CKEditorWidget',
-)
-
-for _path in _widget_candidates:
-    try:
-        module_path, cls_name = _path.rsplit('.', 1)
-        module = __import__(module_path, fromlist=[cls_name])
-        CKEditorUploadingWidget = getattr(module, cls_name)
-        break
-    except Exception:
-        continue
-
-# 💡 Función dummy para evitar el error
-def clean_html(texto):
-    return texto
+from django import forms
+from .models import Articulo
 
 # Widget custom para permitir múltiples archivos
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
-
+    attrs = {'class': 'hidden'}  # ocultamos el input por defecto y lo manejamos con un botón
 
 class ArticuloForm(forms.ModelForm):
+
     class Meta:
         model = Articulo
         fields = ['titulo', 'contenido', 'categoria']
-        try:
-            widget_name = CKEditorUploadingWidget.__name__
-        except Exception:
-            widget_name = ''
-        
-        if 'CKEditor5' in widget_name or 'CKEditor5Widget' in widget_name:
-            widgets = {
-                'contenido': CKEditorUploadingWidget(config_name='default'),
-            }
-        else:
-            widgets = {
-                'contenido': CKEditorUploadingWidget(),
-            }
-
-    def clean_contenido(self):
-        raw = self.cleaned_data.get('contenido', '')
-        cleaned = clean_html(raw)
-        return cleaned
+        widgets = {
+            'titulo': forms.TextInput(attrs={
+                'class': (
+                    'w-full p-3 mb-4 rounded-xl border-2 border-orange-300 '
+                    'focus:border-orange-500 focus:ring-2 focus:ring-orange-200 '
+                    'text-gray-800 placeholder-gray-400 transition-all duration-200'
+                ),
+                'placeholder': 'Escribe el título del artículo...',
+            }),
+            'contenido': forms.Textarea(attrs={
+                'class': (
+                    'w-full p-4 rounded-xl border-2 border-orange-300 '
+                    'focus:border-orange-500 focus:ring-2 focus:ring-orange-200 '
+                    'text-gray-800 placeholder-gray-400 resize-none '
+                    'transition-all duration-200'
+                ),
+                'rows': 10,
+                'placeholder': 'Escribe el contenido del artículo aquí...',
+            }),
+            'categoria': forms.Select(attrs={
+                'class': (
+                    'w-full p-3 rounded-xl border-2 border-orange-300 '
+                    'focus:border-orange-500 focus:ring-2 focus:ring-orange-200 '
+                    'bg-white text-gray-800 transition-all duration-200'
+                ),
+            }),
+        }

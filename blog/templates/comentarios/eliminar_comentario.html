@@ -1,23 +1,52 @@
 {% extends 'layouts/general-layout.html' %}
-
+{% load static  %}
 {% block title %}Eliminar comentario{% endblock title %}
 
+{% block banner %}
+<section class="relative w-full h-[300px] md:h-[420px] lg:h-[500px] overflow-hidden">
+
+  <!-- Imagen -->
+  <img 
+    src="{% static 'img/banner-cargar-articulos.jpg' %}" 
+    alt="Banner del artículo"
+    class="w-full h-full object-cover"
+  >
+
+  <!-- Título centrado -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+    <h1 class="text-orange-600 text-3xl md:text-5xl font-extrabold drop-shadow-xl">
+      Mundo Mascotas
+    </h1>
+  </div>
+
+</section>
+{% endblock banner %}
+
 {% block content %}
-<div class="container mt-4">
+<div class="max-w-2xl mx-auto px-4 py-10">
 
-    <h3 class="mb-3 text-danger">¿Eliminar comentario?</h3>
+    <!-- Título -->
+    <h3 class="text-2xl font-bold text-red-600 mb-6">¿Eliminar comentario?</h3>
 
-    <div class="alert alert-warning">
+    <!-- Advertencia -->
+    <div class="bg-yellow-100 text-yellow-800 p-4 rounded-lg mb-6 shadow-sm">
         ¿Seguro que deseas eliminar este comentario?  
         <br>
-        <strong>"{{ object.contenido }}"</strong>
+        <strong class="text-gray-800">"{{ object.contenido }}"</strong>
     </div>
 
-    <form method="POST">
+    <!-- Formulario -->
+    <form method="POST" class="flex gap-4">
         {% csrf_token %}
-        
-        <button type="submit" class="btn btn-danger">Eliminar</button>
-        <a href="{% url 'posts:articulo_detalle' object.articulo.pk %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" 
+                class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow transition">
+            Eliminar
+        </button>
+
+        <a href="{% url 'posts:articulo_detalle' object.articulo.pk %}" 
+           class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg">
+           Cancelar
+        </a>
     </form>
 
 </div>
