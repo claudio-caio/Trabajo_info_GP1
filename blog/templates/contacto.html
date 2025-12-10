@@ -1,0 +1,196 @@
+{% extends 'layouts/general-layout.html' %}
+{% load static %}
+
+{% block title %}Contáctanos – PetBlog{% endblock title %}
+
+{% block banner %}
+<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
+  <img 
+    src="{% static 'img/banner3.jpg' %}" 
+    alt="Contáctanos – Equipo de PetBlog"
+    fetchpriority="high"
+    loading="eager"
+    class="w-full h-full object-cover"
+  >
+  <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
+      Contáctanos
+    </h1>
+  </div>
+</section>
+{% endblock banner %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+
+  <!-- Introducción -->
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-orange-600 mb-4">
+      💌 ¿Tienes algo que decirnos?
+    </h2>
+    <p class="text-gray-700 text-lg max-w-2xl mx-auto">
+      Nos encantaría saber de ti. Ya sea una sugerencia, pregunta, error o idea para mejorar,
+      estamos atentos a tu mensaje.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-10">
+
+    <!-- Formulario -->
+    <div class="bg-white p-8 rounded-3xl shadow-lg border border-orange-200">
+      <h3 class="text-2xl font-bold text-orange-700 mb-6">Envíanos un mensaje</h3>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="p-4 mb-5 rounded-xl 
+            {% if message.tags == 'success' %} bg-green-100 text-green-800
+            {% elif message.tags == 'error' %} bg-red-100 text-red-800
+            {% else %} bg-blue-100 text-blue-800 {% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form id="contactForm" method="post" class="space-y-5">
+        {% csrf_token %}
+
+        <div>
+          <label for="nombre" class="block font-semibold text-gray-800 mb-2">Nombre completo *</label>
+          <input 
+            type="text" 
+            id="nombre"
+            name="nombre" 
+            required
+            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
+            placeholder="Ej. María López"
+          >
+        </div>
+
+        <div>
+          <label for="email" class="block font-semibold text-gray-800 mb-2">Correo electrónico *</label>
+          <input 
+            type="email" 
+            id="email"
+            name="email" 
+            required
+            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
+            placeholder="tu@email.com"
+          >
+        </div>
+
+        <div>
+          <label for="asunto" class="block font-semibold text-gray-800 mb-2">Asunto *</label>
+          <select 
+            id="asunto"
+            name="asunto" 
+            required
+            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
+          >
+            <option value="">Selecciona un asunto</option>
+            <option value="consulta">Consulta general</option>
+            <option value="sugerencia">Sugerencia de mejora</option>
+            <option value="reporte">Reportar error o problema</option>
+            <option value="colaboracion">Propuesta de colaboración</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="mensaje" class="block font-semibold text-gray-800 mb-2">Mensaje *</label>
+          <textarea 
+            id="mensaje"
+            name="mensaje" 
+            rows="5" 
+            required
+            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition resize-none"
+            placeholder="Cuéntanos con detalle tu inquietud..."
+          ></textarea>
+        </div>
+
+        <button 
+          type="submit"
+          class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+        >
+          Enviar mensaje
+        </button>
+      </form>
+    </div>
+
+    <!-- Información de contacto -->
+    <div class="space-y-6">
+
+      <!-- Datos de contacto -->
+      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-3xl shadow-lg border border-orange-200">
+        <h3 class="text-2xl font-bold text-orange-700 mb-5">Información de contacto</h3>
+        
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <span class="text-3xl" aria-hidden="true">📧</span>
+            <div>
+              <h4 class="font-semibold text-gray-800">Correo electrónico</h4>
+              <a href="mailto:petblog@info2025.com" class="text-orange-600 hover:underline font-medium">
+                petblog@info2025.com
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <span class="text-3xl" aria-hidden="true">📍</span>
+            <div>
+              <h4 class="font-semibold text-gray-800">Ubicación</h4>
+              <p class="text-gray-700">
+                Grupo 01 – Informatorio 2025<br>
+                Resistencia, Chaco, Argentina
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <span class="text-3xl" aria-hidden="true">🕒</span>
+            <div>
+              <h4 class="font-semibold text-gray-800">Soporte</h4>
+              <p class="text-gray-700">Respuesta en 24–48 horas hábiles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ útil -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg border border-orange-200">
+        <h3 class="text-xl font-bold text-orange-700 mb-4">Preguntas frecuentes</h3>
+        <div class="space-y-3 text-gray-700">
+
+          <details class="group">
+            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Responden todos los mensajes?</summary>
+            <p class="mt-2 text-sm pl-4">Sí, nos comprometemos a responder todos los mensajes relevantes en menos de 48 horas.</p>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Puedo reportar contenido inadecuado?</summary>
+            <p class="mt-2 text-sm pl-4">Claro. Usa el asunto “Reportar error o problema” y describe el contenido o enlace afectado.</p>
+          </details>
+
+          <details class="group">
+            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Este proyecto es comercial?</summary>
+            <p class="mt-2 text-sm pl-4">No. Es un proyecto educativo sin fines de lucro, desarrollado por estudiantes del Informatorio 2025.</p>
+          </details>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Solo para demostración en frontend
+document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('✅ ¡Gracias por tu mensaje!\n\nEn una versión funcional, este formulario enviaría tus datos al equipo del blog.');
+  this.reset();
+});
+</script>
+
+{% endblock content %}
