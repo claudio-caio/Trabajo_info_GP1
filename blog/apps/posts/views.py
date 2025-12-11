@@ -20,7 +20,7 @@ class ArticuloListView(ListView):
     model = Articulo
     template_name = 'posts/articulo_lista.html'
     context_object_name = 'articulos'
-    paginate_by = 4
+    paginate_by = 6
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -35,9 +35,10 @@ class ArticuloListView(ListView):
             queryset = queryset.filter(categoria_id=categoria_id)
         
         if ordenar_por == 'mas_recientes':
-            queryset = queryset.order_by('vistas')
-        elif ordenar_por == 'mas_vistos':
-            queryset = queryset.order_by('-vistas')
+            # Ordenar por fecha de publicación más reciente primero
+            queryset = queryset.order_by('-fecha_publicacion')
+        elif ordenar_por == 'mas_visitados':
+            queryset = queryset.order_by('-visitas')
         elif ordenar_por == 'fecha_ascendente':
             queryset = queryset.order_by('fecha_publicacion')
         elif ordenar_por == 'fecha_descendente':
