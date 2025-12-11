@@ -1,178 +1,445 @@
 {% extends 'layouts/general-layout.html' %}
-{% load static  %}
+{% load static %}
 {% block title %}Crear artículo{% endblock title %}
-
 
 {% block banner %}
 <section class="relative w-full h-[300px] md:h-[420px] lg:h-[500px] overflow-hidden">
-
-  <!-- Imagen -->
   <img 
     src="{% static 'img/banner-cargar-articulos.jpg' %}" 
     alt="Banner del artículo"
     class="w-full h-full object-cover"
   >
-
-  <!-- Título centrado -->
   <div class="absolute inset-0 flex items-center justify-center bg-black/40">
     <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
       Crea tu Post aquí
     </h1>
   </div>
-
 </section>
 {% endblock banner %}
 
 {% block content %}
-
 <div class="max-w-4xl mx-auto px-4 py-10">
+  <div class="mb-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-orange-700 mb-2">
+      Crear nuevo artículo
+    </h2>
+    <p class="text-gray-600">
+      Comparte tus ideas y experiencias con la comunidad
+    </p>
+  </div>
 
-    <!-- Título -->
-    <h2 class="text-3xl font-bold text-orange-700 mb-6">Crear nuevo artículo</h2>
+  {% if messages %}
+  <div class="mb-6">
+    {% for message in messages %}
+    <div class="p-4 mb-3 rounded-xl border-l-4
+      {% if message.tags == 'success' %} 
+        bg-green-50 text-green-800 border-green-500
+      {% elif message.tags == 'error' %} 
+        bg-red-50 text-red-800 border-red-500
+      {% else %} 
+        bg-blue-50 text-blue-800 border-blue-500
+      {% endif %}">
+      <div class="flex items-center">
+        {% if message.tags == 'success' %}
+        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        {% elif message.tags == 'error' %}
+        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+        {% else %}
+        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        {% endif %}
+        <span>{{ message }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-    <!-- Mensajes -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="p-3 mb-4 rounded-lg 
-                {% if message.tags == 'success' %} bg-green-100 text-green-700 
-                {% elif message.tags == 'error' %} bg-red-100 text-red-700 
-                {% else %} bg-gray-100 text-gray-700 {% endif %}">
-                {{ message }}
-            </div>
+  <form method="POST" enctype="multipart/form-data" class="space-y-8">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="bg-red-50 text-red-800 p-4 rounded-xl border border-red-200">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+        <span class="font-semibold">Error:</span>
+      </div>
+      <ul class="mt-2 ml-7 list-disc text-sm">
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
         {% endfor %}
+      </ul>
+    </div>
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data" class="space-y-6">
-        {% csrf_token %}
+    <!-- TÍTULO -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <label class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+        <svg class="w-5 h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        Título del artículo
+      </label>
+      {{ form.titulo }}
+      {% for error in form.titulo.errors %}
+      <p class="text-red-600 text-sm mt-2 flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+      </p>
+      {% endfor %}
+    </div>
 
-        <!-- Errores generales -->
-        {% if form.non_field_errors %}
-            <div class="bg-red-100 text-red-700 p-3 rounded-lg">
-                {{ form.non_field_errors }}
+    <!-- CONTENIDO -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <label class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+        <svg class="w-5 h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+        </svg>
+        Contenido
+      </label>
+      {{ form.contenido }}
+      {% for error in form.contenido.errors %}
+      <p class="text-red-600 text-sm mt-2 flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+      </p>
+      {% endfor %}
+    </div>
+
+    <!-- CATEGORÍA -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <label class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+        <svg class="w-5 h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+        </svg>
+        Categoría
+      </label>
+      <div class="relative">
+        {{ form.categoria }}
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
+      {% for error in form.categoria.errors %}
+      <p class="text-red-600 text-sm mt-2 flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+      </p>
+      {% endfor %}
+    </div>
+
+    <!-- SUBIR IMÁGENES -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <label class="text-lg font-semibold text-orange-700 mb-3 flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+        </svg>
+        Imágenes del artículo
+        <span class="ml-2 text-sm font-normal text-gray-600">
+          (Máximo 5 imágenes)
+        </span>
+      </label>
+
+      <!-- Área de subida -->
+      <div class="mb-6">
+        <div 
+          id="upload-area"
+          class="flex flex-col items-center justify-center w-full h-48 
+                 border-3 border-dashed border-orange-300 rounded-2xl 
+                 bg-orange-50 hover:bg-orange-100 transition-all duration-300 
+                 cursor-pointer shadow-sm hover:shadow-lg"
+        >
+          <div class="flex flex-col items-center text-center p-6">
+            <div class="w-16 h-16 mb-4 bg-orange-100 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                   viewBox="0 0 24 24" 
+                   fill="currentColor" 
+                   class="w-8 h-8 text-orange-600">
+                <path d="M12 16.5l-4-4h3V3h2v9.5h3l-4 4z" />
+                <path d="M19 18H5v2h14v-2z" />
+              </svg>
             </div>
-        {% endif %}
 
-        <!-- TÍTULO -->
-        <div>
-            <label class="block font-semibold text-gray-800 mb-1">Título</label>
-            {{ form.titulo }}
-            {% for error in form.titulo.errors %}
-                <p class="text-red-600 text-sm mt-1 ">{{ error }}</p>
-            {% endfor %}
+            <p class="text-lg font-semibold text-orange-700 mb-1">
+              Arrastra y suelta imágenes aquí
+            </p>
+            <p class="text-gray-600 mb-2">o haz clic para seleccionar</p>
+            <p class="text-gray-500 text-sm">
+              Formatos permitidos: JPG, PNG, WEBP
+            </p>
+          </div>
         </div>
 
-        <!-- CONTENIDO -->
-        <div>
-            <label class="block font-semibold text-gray-800 mb-1">Contenido</label>
-            {{ form.contenido }}
-            {% for error in form.contenido.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
-        </div>
+        <!-- Input de archivos -->
+        <input 
+          type="file" 
+          name="imagenes"
+          accept="image/*"
+          multiple
+          class="hidden"
+          id="file-input"
+        >
 
-        <!-- CATEGORÍA -->
-        <div>
-            <label class="block font-semibold text-gray-800 mb-1">Categoría</label>
-            {{ form.categoria }}
-            {% for error in form.categoria.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ error }}</p>
-            {% endfor %}
-        </div>
-
-        <!-- SUBIR NUEVAS IMÁGENES -->
-        <div class="mb-6">
-            <label class="block font-semibold text-orange-700 text-lg mb-2">
-                Agregar imágenes (máximo 5)
-            </label>
-
-            <label 
-                id="drop-area"
-                class="flex flex-col items-center justify-center w-full h-40 
-                       border-2 border-dashed border-orange-300 rounded-2xl 
-                       bg-orange-50/60 hover:bg-orange-100 transition cursor-pointer
-                       shadow-sm hover:shadow-md relative"
-            >
-                <div class="flex flex-col items-center pointer-events-none">
-                    <!-- Icono -->
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                         viewBox="0 0 24 24" 
-                         fill="currentColor" 
-                         class="w-10 h-10 text-orange-500 mb-2">
-                        <path d="M12 16.5l-4-4h3V3h2v9.5h3l-4 4z" />
-                        <path d="M19 18H5v2h14v-2z" />
-                    </svg>
-
-                    <p class="text-orange-700 font-medium">Haz clic o arrastra imágenes aquí</p>
-                    <p class="text-gray-500 text-sm">Formatos permitidos: JPG, PNG, WEBP</p>
-                </div>
-
-                <input 
-                    type="file" 
-                    name="imagenes"
-                    accept="image/*"
-                    multiple
-                    class="hidden"
-                    id="imagenes-input"
-                >
-            </label>
-
-            <!-- Contador de imágenes -->
-            <p class="text-gray-600 mt-2" id="contador-imagenes">0 imágenes seleccionadas</p>
-
-            <!-- Vista previa -->
-            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mt-4" id="preview-imagenes"></div>
-        </div>
-
-        <!-- Botones -->
-        <div class="flex gap-4">
-            <button 
-                type="submit"
-                class="px-5 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg shadow transition"
-            >
-                Crear artículo
+        <!-- Contador de imágenes -->
+        <div id="counter-container" class="mt-4 hidden">
+          <div class="flex items-center justify-between">
+            <p class="text-gray-700 font-medium flex items-center">
+              <svg class="w-5 h-5 mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+              </svg>
+              <span id="image-counter">0 imágenes seleccionadas</span>
+            </p>
+            <button type="button" id="clear-all" 
+                    class="text-sm text-red-600 hover:text-red-800 font-medium">
+              Limpiar todas
             </button>
-
-            <a href="{% url 'posts:articulo_lista' %}"
-               class="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg">
-               Cancelar
-            </a>
+          </div>
         </div>
-    </form>
+      </div>
 
+      <!-- VISTA PREVIA -->
+      <div id="preview-container" class="hidden">
+        <h4 class="font-semibold text-gray-800 mb-4">Vista previa de imágenes</h4>
+        <div id="image-preview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+      <button 
+        type="submit"
+        class="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 
+               hover:from-orange-700 hover:to-orange-800 
+               text-white font-semibold rounded-xl shadow-lg 
+               hover:shadow-xl transition-all duration-300 
+               flex items-center justify-center gap-2 flex-1"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Publicar artículo
+      </button>
+
+      <a href="{% url 'posts:articulo_lista' %}"
+         class="px-8 py-3 bg-gray-100 hover:bg-gray-200 
+                text-gray-800 font-semibold rounded-xl border border-gray-300
+                hover:shadow-lg transition-all duration-300 
+                flex items-center justify-center gap-2 flex-1">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Cancelar
+      </a>
+    </div>
+  </form>
 </div>
 
-<!-- Script vista previa de imágenes -->
+<!-- SCRIPT COMPLETAMENTE RENOMBRADO PARA EVITAR CONFLICTOS -->
 <script>
-const inputImagenes = document.getElementById("imagenes-input");
-const previewContainer = document.getElementById("preview-imagenes");
-const contador = document.getElementById("contador-imagenes");
-const MAX_IMAGENES = 5;
-
-inputImagenes.addEventListener("change", function() {
-    previewContainer.innerHTML = ""; // Limpiar preview
-    const archivos = Array.from(this.files);
-
-    if (archivos.length > MAX_IMAGENES) {
-        alert(`Solo puedes subir un máximo de ${MAX_IMAGENES} imágenes.`);
-        this.value = "";
-        contador.textContent = `0 imágenes seleccionadas`;
-        return;
+// Inicialización de variables con nombres únicos
+document.addEventListener('DOMContentLoaded', function() {
+  const fileInput = document.getElementById('file-input');
+  const uploadArea = document.getElementById('upload-area');
+  const imagePreview = document.getElementById('image-preview');
+  const imageCounter = document.getElementById('image-counter');
+  const counterContainer = document.getElementById('counter-container');
+  const previewContainer = document.getElementById('preview-container');
+  const clearAllBtn = document.getElementById('clear-all');
+  
+  const MAX_IMAGES = 5;
+  const selectedImages = [];
+  
+  // Función para mostrar notificaciones
+  const showNotification = (message, type = 'info') => {
+    // Eliminar notificaciones anteriores
+    const oldNotifications = document.querySelectorAll('.temp-notification');
+    oldNotifications.forEach(note => note.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `temp-notification fixed top-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 ${
+      type === 'error' ? 'bg-red-100 text-red-800 border-l-4 border-red-500' :
+      type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' :
+      'bg-blue-100 text-blue-800 border-l-4 border-blue-500'
+    }`;
+    
+    notification.innerHTML = `
+      <div class="flex items-center">
+        <span class="mr-2">${type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️'}</span>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  };
+  
+  // Función para actualizar la vista previa
+  const updatePreview = () => {
+    // Limpiar vista previa
+    imagePreview.innerHTML = '';
+    
+    if (selectedImages.length === 0) {
+      counterContainer.classList.add('hidden');
+      previewContainer.classList.add('hidden');
+      return;
     }
-
-    // Actualizar contador
-    contador.textContent = `${archivos.length} imagen(es) seleccionada(s)`;
-
-    archivos.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = document.createElement("img");
-            img.src = e.target.result;
-            img.classList.add("rounded-xl", "shadow-sm", "w-full", "h-24", "object-cover");
-            previewContainer.appendChild(img);
-        }
-        reader.readAsDataURL(file);
+    
+    // Mostrar contador y vista previa
+    counterContainer.classList.remove('hidden');
+    previewContainer.classList.remove('hidden');
+    imageCounter.textContent = `${selectedImages.length} imagen(es) seleccionada(s)`;
+    
+    // Crear vista previa para cada imagen
+    selectedImages.forEach((image, index) => {
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'relative group';
+        
+        const imgElement = document.createElement('img');
+        imgElement.src = e.target.result;
+        imgElement.className = 'w-full h-32 object-cover rounded-lg shadow-md';
+        imgElement.alt = `Imagen ${index + 1}`;
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center';
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity';
+        deleteBtn.innerHTML = '×';
+        deleteBtn.title = 'Eliminar esta imagen';
+        
+        // Evento para eliminar imagen
+        deleteBtn.addEventListener('click', function() {
+          selectedImages.splice(index, 1);
+          
+          // Actualizar el input de archivos
+          const dataTransfer = new DataTransfer();
+          selectedImages.forEach(file => {
+            dataTransfer.items.add(file);
+          });
+          fileInput.files = dataTransfer.files;
+          
+          updatePreview();
+          showNotification('Imagen eliminada', 'info');
+        });
+        
+        overlay.appendChild(deleteBtn);
+        previewItem.appendChild(imgElement);
+        previewItem.appendChild(overlay);
+        imagePreview.appendChild(previewItem);
+      };
+      
+      reader.readAsDataURL(image);
     });
+  };
+  
+  // Función para procesar archivos
+  const processFiles = (files) => {
+    const fileArray = Array.from(files);
+    
+    // Filtrar solo imágenes
+    const imageFiles = fileArray.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length === 0) {
+      showNotification('Por favor, selecciona solo archivos de imagen', 'error');
+      return;
+    }
+    
+    // Verificar límite
+    if (imageFiles.length > MAX_IMAGES) {
+      showNotification(`Solo puedes subir un máximo de ${MAX_IMAGES} imágenes`, 'error');
+      return;
+    }
+    
+    // Limpiar y agregar nuevas imágenes
+    selectedImages.length = 0;
+    imageFiles.forEach(file => selectedImages.push(file));
+    
+    // Actualizar input
+    const dataTransfer = new DataTransfer();
+    selectedImages.forEach(file => {
+      dataTransfer.items.add(file);
+    });
+    fileInput.files = dataTransfer.files;
+    
+    // Actualizar vista
+    updatePreview();
+    
+    if (selectedImages.length > 0) {
+      showNotification(`${selectedImages.length} imagen(es) seleccionada(s)`, 'success');
+    }
+  };
+  
+  // Event Listeners
+  
+  // Click en área de upload
+  uploadArea.addEventListener('click', () => {
+    fileInput.click();
+  });
+  
+  // Cambio en input de archivos
+  fileInput.addEventListener('change', (e) => {
+    processFiles(e.target.files);
+  });
+  
+  // Drag & Drop
+  ['dragenter', 'dragover'].forEach(eventName => {
+    uploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('border-orange-500', 'bg-orange-100');
+    });
+  });
+  
+  ['dragleave', 'drop'].forEach(eventName => {
+    uploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('border-orange-500', 'bg-orange-100');
+      
+      if (eventName === 'drop') {
+        processFiles(e.dataTransfer.files);
+      }
+    });
+  });
+  
+  // Limpiar todas las imágenes
+  clearAllBtn.addEventListener('click', () => {
+    selectedImages.length = 0;
+    fileInput.value = '';
+    updatePreview();
+    showNotification('Todas las imágenes han sido eliminadas', 'info');
+  });
+  
+  // Estilizar campos del formulario
+  document.querySelectorAll('input, textarea, select').forEach(element => {
+    if (!element.classList.contains('hidden') && element.type !== 'file') {
+      element.classList.add('w-full', 'px-4', 'py-3', 'rounded-xl', 
+                          'border', 'border-gray-300', 'focus:border-orange-500', 
+                          'focus:ring-2', 'focus:ring-orange-200', 
+                          'outline-none', 'transition-all', 'duration-200',
+                          'placeholder-gray-400');
+    }
+  });
 });
 </script>
-
 {% endblock content %}
