@@ -287,18 +287,6 @@
         </p>
 
         <div class="flex items-center justify-between pt-5 border-t border-gray-100">
-          <div class="flex items-center gap-2">
-            {% if articulo.tags.all %}
-              {% for tag in articulo.tags.all|slice:":2" %}
-                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#{{ tag.nombre }}</span>
-              {% endfor %}
-              {% if articulo.tags.all|length > 2 %}
-                <span class="text-xs text-gray-400">+{{ articulo.tags.all|length|add:"-2" }}</span>
-              {% endif %}
-            {% else %}
-              <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">Sin etiquetas</span>
-            {% endif %}
-          </div>
           <a 
             href="{% url 'posts:articulo_detalle' articulo.pk %}" 
             class="inline-flex items-center gap-2 text-orange-600 hover:text-orange-800 font-semibold group/readmore text-sm"
