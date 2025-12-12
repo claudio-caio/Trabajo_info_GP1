@@ -174,26 +174,34 @@
       <form method="POST" id="deleteForm" class="space-y-6">
         {% csrf_token %}
         
-        <!-- Checkbox de confirmación -->
-        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
-          <div class="flex items-start mb-4">
-            <input type="checkbox" id="confirmDelete" name="confirmDelete" 
-                   class="mt-1 mr-3 h-5 w-5 text-red-600 border-gray-300 rounded focus:ring-red-500">
-            <label for="confirmDelete" class="text-yellow-800 font-medium cursor-pointer select-none">
-              <span class="block text-lg font-bold mb-1">Confirmo que entiendo las consecuencias</span>
-              <span class="text-yellow-700">
-                He leído la advertencia y comprendo que esta acción eliminará permanentemente mi comentario. 
-                No podré recuperarlo una vez eliminado.
+        <!-- Checkbox minimalista -->
+        <div class="bg-gradient-to-r from-orange-50 to-white rounded-lg border border-orange-100 p-4">
+          <label class="flex items-center space-x-3 cursor-pointer group">
+            <!-- Checkbox con efecto -->
+            <div class="relative">
+              <input type="checkbox" id="confirmDelete" name="confirmDelete" 
+                    class="peer sr-only">
+              <!-- Cuadro del checkbox -->
+              <div class="w-6 h-6 border-2 border-gray-300 rounded
+                          peer-checked:border-orange-600 peer-checked:bg-orange-600
+                          transition-all duration-200 group-hover:border-orange-500
+                          flex items-center justify-center">
+                <!-- Check en blanco -->
+                <span class="text-white font-bold text-sm opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+                  ✓
+                </span>
+              </div>
+            </div>
+            
+            <div class="flex-1">
+              <span class="text-gray-800 font-medium block">
+                Confirmo la eliminación permanente
               </span>
-            </label>
-          </div>
-          
-          <div class="flex items-center text-sm text-yellow-700 bg-yellow-100 p-3 rounded-lg">
-            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            Marca esta casilla para habilitar el botón de eliminación
-          </div>
+              <span class="text-gray-600 text-sm block mt-1">
+                Comprendo que esta acción no se puede deshacer
+              </span>
+            </div>
+          </label>
         </div>
 
         <!-- Botones de acción -->
@@ -324,6 +332,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #ea580c, #d97706);
 }
+</style>
 
 <!-- Script para controlar el botón de eliminación -->
 <script>
