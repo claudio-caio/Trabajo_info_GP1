@@ -11,9 +11,14 @@
     class="w-full h-full object-cover"
   >
   <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
-      Bienvenido a 🐾 PetSite
-    </h1>
+    <div class="text-center px-4">
+      <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl mb-4">
+        Bienvenido a 🐾 PetSite
+      </h1>
+      <p class="text-white text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto drop-shadow-lg px-2">
+        Este artículo te resultara interesante
+      </p>
+    </div>
   </div>
 </section>
 {% endblock banner %}
@@ -498,6 +503,27 @@
 
 <!-- Scripts -->
 <style>
+
+  /* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fed7aa;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #f59e0b);
+  border-radius: 5px;
+  border: 2px solid #fed7aa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ea580c, #d97706);
+}
+
   /* Estilos adicionales */
   .prose blockquote {
     position: relative;
