@@ -59,11 +59,11 @@
           <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-white/40 border-r-white/20 animate-spin-slow"></div>
           
           <!-- Indicador de estado mejorado -->
-          <div class="absolute bottom-4 right-4 w-9 h-9 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-3 border-white shadow-xl flex items-center justify-center group-hover/avatar:scale-110 transition-transform duration-300">
+          {% comment %} <div class="absolute bottom-4 right-4 w-9 h-9 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-3 border-white shadow-xl flex items-center justify-center group-hover/avatar:scale-110 transition-transform duration-300">
             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
-          </div>
+          </div> {% endcomment %}
         </div>
         
         <!-- Información del usuario mejorada -->
@@ -373,7 +373,7 @@
       </div>
 
       <!-- Botones de acción principales mejorados -->
-      <div class="flex flex-wrap justify-center gap-6 mb-8">
+{% comment %}       <div class="flex flex-wrap justify-center gap-6 mb-8">
         <a href="{% url 'usuarios:editar_perfil' %}" 
            class="group relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -400,7 +400,7 @@
           </svg>
           <span class="relative z-10">Ver Todos los Artículos</span>
         </a>
-      </div>
+      </div> {% endcomment %}
     </div>
   </div>
 
@@ -607,90 +607,6 @@
   </div>
 
 </div>
-
-<!-- Estilos adicionales mejorados -->
-<style>
-  /* Scrollbar personalizado */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #fed7aa;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #f97316, #f59e0b);
-  border-radius: 5px;
-  border: 2px solid #fed7aa;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #ea580c, #d97706);
-}
-
-
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  /* Animaciones personalizadas */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes spin-slow {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
-  
-  .animate-spin-slow {
-    animation: spin-slow 3s linear infinite;
-  }
-  
-  .stat-card {
-    animation: fadeInUp 0.5s ease-out forwards;
-    animation-delay: calc(var(--card-index, 0) * 0.1s);
-    opacity: 0;
-  }
-  
-  /* Mejoras de transición */
-  .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-  
-  /* Efecto de brillo en botones */
-  .group:hover .group-hover\:scale-110 {
-    transform: scale(1.1);
-  }
-  
-  /* Progress bar con data attribute */
-  .progress-bar {
-    width: 0%;
-  }
-</style>
 
 <!-- Script mejorado para animaciones -->
 <script>
