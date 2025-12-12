@@ -32,19 +32,8 @@
   
   <!-- Progreso de edición -->
   <div class="mb-10">
-    <div class="flex items-center justify-between mb-3">
+    
       <h2 class="text-2xl font-bold text-gray-800">Completa tu perfil</h2>
-      <span class="px-3 py-1 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-800 font-bold rounded-full text-sm">
-        {% widthratio form.filled_fields form.total_fields 100 %}% completado
-      </span>
-    </div>
-    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-      {% with filled=form.filled_fields|default:0 total=form.total_fields|default:1 %}
-      <div class="h-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-1000 ease-out progress-bar" 
-           data-filled="{{ filled }}" 
-           data-total="{{ total }}"></div>
-      {% endwith %}
-    </div>
   </div>
 
   <div class="grid lg:grid-cols-3 gap-8">
@@ -65,7 +54,7 @@
                   {% endif %}
                 </span>
               </div>
-              <div class="absolute bottom-4 right-4 w-6 h-6 bg-green-500 rounded-full border-2 border-white shadow-md"></div>
+              {% comment %} <div class="absolute bottom-4 right-4 w-6 h-6 bg-green-500 rounded-full border-2 border-white shadow-md"></div> {% endcomment %}
             </div>
             <h3 id="profile-preview-name" class="text-xl font-bold text-white mb-1">
               {% if user.first_name or user.last_name %}
@@ -171,10 +160,12 @@
               <p class="font-medium">{{ message }}</p>
               {% if message.tags == 'success' %}
               <div class="flex items-center gap-2 mt-2">
-                <div class="w-full bg-white/50 rounded-full h-1.5 overflow-hidden">
-                  <div class="h-full bg-green-500 rounded-full countdown-bar"></div>
-                </div>
-                <span class="text-sm">Redirigiendo...</span>
+                <a href="{% url 'usuarios:perfil' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                  </svg>
+                  Volver al perfil
+                </a>
               </div>
               {% endif %}
             </div>
@@ -317,7 +308,7 @@
               </div>
             </div>
           </div>
-
+{% comment %} 
           <!-- Sección 2: Biografía -->
           <div class="space-y-6 pt-8 border-t border-orange-200">
             <div class="flex items-center gap-3 mb-4">
@@ -359,7 +350,7 @@
               </div>
               {% endif %}
             </div>
-          </div>
+          </div> {% endcomment %}
 
           <!-- Botones de acción -->
           <div class="flex flex-wrap gap-4 justify-between items-center pt-8 border-t border-orange-200">
@@ -551,20 +542,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Inicializar vista previa de la inicial
   updateInitialPreview();
 
-  // Animación para la barra de progreso del mensaje de éxito
-  const countdownBar = document.querySelector('.countdown-bar');
-  if (countdownBar) {
-    let width = 100;
-    const interval = setInterval(() => {
-      width -= 1;
-      countdownBar.style.width = width + '%';
-      if (width <= 0) {
-        clearInterval(interval);
-        window.location.href = "{% url 'usuarios:perfil' %}";
-      }
-    }, 20); // 2 segundos en total
-  }
-
   // Efecto de shake para errores
   const errorElements = document.querySelectorAll('.animate-shake');
   errorElements.forEach(el => {
@@ -608,89 +585,4 @@ function formatPhoneNumber(input) {
 }
 </script>
 
-<style>
-  /* ELIMINAR SCROLLBAR HORIZONTAL SOLO EN ESTA PÁGINA */
-  body {
-    overflow-x: hidden !important;
-  }
-  
-  /* Scrollbar personalizado */
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #fed7aa;
-    border-radius: 5px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #f97316, #f59e0b);
-    border-radius: 5px;
-    border: 2px solid #fed7aa;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #ea580c, #d97706);
-  }
-  
-  /* Animaciones */
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-  }
-  
-  .animate-fade-in-down {
-    animation: fadeInDown 0.5s ease-out;
-  }
-  
-  .animate-shake {
-    animation: shake 0.5s ease-in-out;
-  }
-  
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  /* Scrollbar personalizado para textareas */
-  textarea::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  textarea::-webkit-scrollbar-track {
-    background: #fed7aa;
-    border-radius: 5px;
-  }
-  
-  textarea::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #f97316, #f59e0b);
-    border-radius: 5px;
-    border: 2px solid #fed7aa;
-  }
-  
-  textarea::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #ea580c, #d97706);
-  }
-  
-  /* Efecto de enfoque mejorado */
-  input:focus, textarea:focus, select:focus {
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
-  }
-</style>
 {% endblock content %}
