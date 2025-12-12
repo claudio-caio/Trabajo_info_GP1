@@ -4,7 +4,7 @@
 {% block title %}Sobre Nosotros – Nuestra Comunidad de Mascotas{% endblock title %}
 
 {% block banner %}
-<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
+<section class="relative w-full h-[280px] sm:h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
   <img 
     src="{% static 'img/banner2.webp' %}" 
     alt="Equipo de desarrolladores junto a sus mascotas – Sobre Nosotros"
@@ -13,71 +13,113 @@
     class="w-full h-full object-cover mt-3"
   >
   <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
-      Sobre Nosotros
-    </h1>
+    <div class="text-center px-4">
+      <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide drop-shadow-xl mb-3">
+        Sobre Nosotros
+      </h1>
+      <p class="text-white text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto drop-shadow-lg px-2">
+        Conoce la historia y el equipo detrás de nuestra comunidad de amantes de mascotas
+      </p>
+    </div>
   </div>
 </section>
 {% endblock banner %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
 
   <!-- Introducción -->
-  <article class="text-center mb-16">
-    <h2 class="text-4xl font-bold text-orange-600 mb-4">🐾 Nuestra Historia</h2>
-    <p class="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
-      Somos un equipo de estudiantes del <strong>Informatorio 2025 (Grupo 01)</strong>, unidos por dos pasiones: la programación y el amor por los animales. 
-      Este blog nació con un propósito claro: crear un espacio digital donde los amantes de las mascotas puedan <strong>aprender, compartir y conectarse</strong> en torno al cuidado responsable y el bienestar animal.
-    </p>
+  <article class="text-center mb-12 sm:mb-16 lg:mb-20 px-2">
+    <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-orange-100 rounded-full mb-4 sm:mb-6">
+      <span class="text-2xl sm:text-3xl">🐾</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-orange-600 mb-3 sm:mb-4">Nuestra Historia</h2>
+    <div class="max-w-3xl mx-auto">
+      <p class="text-gray-700 text-base sm:text-lg leading-relaxed mb-4">
+        Somos un equipo de estudiantes del <strong class="text-orange-700">Informatorio 2025 (Grupo 01)</strong>, unidos por dos pasiones: la programación y el amor por los animales. 
+        Este blog nació con un propósito claro: crear un espacio digital donde los amantes de las mascotas puedan <strong class="text-orange-700">aprender, compartir y conectarse</strong> en torno al cuidado responsable y el bienestar animal.
+      </p>
+      <div class="h-1 w-24 sm:w-32 bg-gradient-to-r from-orange-400 to-amber-400 mx-auto rounded-full mt-4 sm:mt-6"></div>
+    </div>
   </article>
 
   <!-- Misión y Visión -->
-  <section class="grid md:grid-cols-2 gap-8 mb-16">
-    <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-3xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300">
-      <div class="text-5xl mb-4" aria-hidden="true">🎯</div>
-      <h3 class="text-2xl font-bold text-orange-700 mb-3">Nuestra Misión</h3>
-      <p class="text-gray-700 leading-relaxed">
-        Promover una comunidad informada y solidaria donde cada dueño de mascota tenga acceso a 
-        <strong>información verificada, consejos prácticos y experiencias reales</strong>, 
-        fomentando siempre la tenencia responsable y el respeto por la vida animal.
-      </p>
-    </div>
+  <section class="mb-12 sm:mb-16 lg:mb-20">
+    <div class="grid lg:grid-cols-2 gap-6 sm:gap-8">
+      <!-- Misión -->
+      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start mb-4 sm:mb-6">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+            <span class="text-xl sm:text-2xl text-white">🎯</span>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-orange-700 mb-2">Nuestra Misión</h3>
+            <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+              Promover una comunidad informada y solidaria donde cada dueño de mascota tenga acceso a 
+              <strong class="text-orange-700">información verificada, consejos prácticos y experiencias reales</strong>, 
+              fomentando siempre la tenencia responsable y el respeto por la vida animal.
+            </p>
+          </div>
+        </div>
+      </div>
 
-    <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-3xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300">
-      <div class="text-5xl mb-4" aria-hidden="true">🌟</div>
-      <h3 class="text-2xl font-bold text-orange-700 mb-3">Nuestra Visión</h3>
-      <p class="text-gray-700 leading-relaxed">
-        Convertirnos en la <strong>plataforma de referencia en español</strong> para amantes de las mascotas, 
-        donde el conocimiento, la empatía y la tecnología se unan para mejorar la vida de miles de animales y sus familias.
-      </p>
+      <!-- Visión -->
+      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start mb-4 sm:mb-6">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+            <span class="text-xl sm:text-2xl text-white">🌟</span>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-orange-700 mb-2">Nuestra Visión</h3>
+            <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+              Convertirnos en la <strong class="text-orange-700">plataforma de referencia en español</strong> para amantes de las mascotas, 
+              donde el conocimiento, la empatía y la tecnología se unan para mejorar la vida de miles de animales y sus familias.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Valores -->
-  <section class="mb-16">
-    <h3 class="text-3xl font-bold text-center text-orange-600 mb-10">💎 Nuestros Valores</h3>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition">
-        <div class="text-5xl mb-3" aria-hidden="true">❤️</div>
-        <h4 class="text-xl font-semibold text-gray-800 mb-2">Amor por los Animales</h4>
-        <p class="text-gray-600">
+  <section class="mb-12 sm:mb-16 lg:mb-20">
+    <div class="text-center mb-8 sm:mb-10 lg:mb-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-orange-100 rounded-full mb-3 sm:mb-4">
+        <span class="text-2xl sm:text-3xl">💎</span>
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-bold text-orange-600 mb-2">Nuestros Valores</h3>
+      <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto px-4">
+        Los principios que guían cada acción en nuestra comunidad
+      </p>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div class="bg-white p-5 sm:p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 transform hover:-translate-y-1">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <span class="text-xl sm:text-2xl">❤️</span>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 text-center">Amor por los Animales</h4>
+        <p class="text-gray-600 text-sm sm:text-base text-center">
           El bienestar animal es nuestro norte. Cada decisión busca proteger, respetar y celebrar la vida de nuestras mascotas.
         </p>
       </div>
 
-      <div class="text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition">
-        <div class="text-5xl mb-3" aria-hidden="true">🤝</div>
-        <h4 class="text-xl font-semibold text-gray-800 mb-2">Comunidad</h4>
-        <p class="text-gray-600">
+      <div class="bg-white p-5 sm:p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 transform hover:-translate-y-1">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <span class="text-xl sm:text-2xl">🤝</span>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 text-center">Comunidad</h4>
+        <p class="text-gray-600 text-sm sm:text-base text-center">
           Creemos que juntos somos más fuertes. Este espacio es tuyo: comparte, pregunta y crece con nosotros.
         </p>
       </div>
 
-      <div class="text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition">
-        <div class="text-5xl mb-3" aria-hidden="true">📚</div>
-        <h4 class="text-xl font-semibold text-gray-800 mb-2">Educación</h4>
-        <p class="text-gray-600">
+      <div class="bg-white p-5 sm:p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 transform hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <span class="text-xl sm:text-2xl">📚</span>
+        </div>
+        <h4 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 text-center">Educación</h4>
+        <p class="text-gray-600 text-sm sm:text-base text-center">
           Información clara, verificada y accesible es la base de una tenencia responsable. Educar es empoderar.
         </p>
       </div>
@@ -85,107 +127,216 @@
   </section>
 
   <!-- Equipo -->
-  <section class="py-12">
-    <h2 class="text-3xl font-bold text-center text-orange-600 mb-8">Nuestro Equipo</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+  <section class="mb-12 sm:mb-16 lg:mb-20">
+    <div class="text-center mb-8 sm:mb-10 lg:mb-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-orange-100 rounded-full mb-3 sm:mb-4">
+        <span class="text-2xl sm:text-3xl">👥</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-orange-600 mb-2">Nuestro Equipo</h2>
+      <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto px-4">
+        Conoce a las personas que hacen posible esta comunidad
+      </p>
+    </div>
 
+    <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
       <!-- Nicolás Tomadín -->
-      <div class="bg-white shadow-md rounded-2xl p-6 text-center hover:shadow-xl transition">
-        <img 
-          src="{% static 'img/nico.webp' %}" 
-          alt="Foto de Nicolás Tomadín – Programador Junior"
-          class="w-28 h-28 rounded-full mx-auto mb-4 object-cover border-4 border-orange-300"
-        >
-        <h3 class="text-xl font-semibold text-gray-800">Nicolás Tomadín</h3>
-        <p class="text-orange-600 font-medium">Lic. en Economía (en curso) • Programador Junior</p>
-        <p class="text-gray-600 text-sm mt-3">
-          Combina programación y economía para crear soluciones web prácticas que aporten valor real a las personas y sus mascotas.
-        </p>
-        <div class="flex justify-center gap-4 mt-4">
-          <a href="https://www.instagram.com/ntomadin.95__/" target="_blank" aria-label="Instagram de Nicolás" class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white hover:scale-110 hover:brightness-110 transition">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/nicolas-tomadin04/" target="_blank" aria-label="LinkedIn de Nicolás" class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 transition">
-            <i class="fa-brands fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com/N1coTom55" target="_blank" aria-label="GitHub de Nicolás" class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-900 hover:scale-110 transition">
-            <i class="fa-brands fa-github"></i>
-          </a>
+      <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+        <div class="p-5 sm:p-6 lg:p-8">
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+            <div class="relative">
+              <img 
+                src="{% static 'img/nico.webp' %}" 
+                alt="Foto de Nicolás Tomadín – Programador Junior"
+                class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-orange-300 shadow-lg"
+              >
+              <div class="absolute -bottom-2 -right-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                Dev
+              </div>
+            </div>
+            
+            <div class="flex-1 text-center sm:text-left">
+              <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-1">Nicolás Tomadín</h3>
+              <p class="text-orange-600 font-medium text-sm sm:text-base mb-2 sm:mb-3">
+                Lic. en Economía (en curso) • Programador Junior
+              </p>
+              <p class="text-gray-600 text-sm mb-3 sm:mb-4">
+                Combina programación y economía para crear soluciones web prácticas que aporten valor real a las personas y sus mascotas.
+              </p>
+              
+              <div class="flex justify-center sm:justify-start gap-3">
+                <a href="https://www.instagram.com/ntomadin.95__/" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white hover:scale-110 hover:brightness-110 transition-all duration-200"
+                   aria-label="Instagram de Nicolás">
+                  <i class="fa-brands fa-instagram text-sm sm:text-base"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nicolas-tomadin04/" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 transition-all duration-200"
+                   aria-label="LinkedIn de Nicolás">
+                  <i class="fa-brands fa-linkedin-in text-sm sm:text-base"></i>
+                </a>
+                <a href="https://github.com/N1coTom55" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-900 hover:scale-110 transition-all duration-200"
+                   aria-label="GitHub de Nicolás">
+                  <i class="fa-brands fa-github text-sm sm:text-base"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Claudio Caio -->
-      <div class="bg-white shadow-md rounded-2xl p-6 text-center hover:shadow-xl transition">
-        <img 
-          src="{% static 'img/caio.webp' %}" 
-          alt="Foto de Claudio Caio – Desarrollador FullStack"
-          class="w-28 h-28 rounded-full mx-auto mb-4 object-cover border-4 border-orange-300"
-        >
-        <h3 class="text-xl font-semibold text-gray-800">Claudio Tomadín</h3>
-        <p class="text-orange-600 font-medium">Téc. Electromecánico • Ing. Electromecánica (en curso) • FullStack Dev</p>
-        <p class="text-gray-600 text-sm mt-3">
-          Une electromecánica, desarrollo y diseño para crear experiencias digitales funcionales y visualmente atractivas.
-        </p>
-        <div class="flex justify-center gap-4 mt-4">
-          <a href="https://www.instagram.com/caioalegres/" target="_blank" aria-label="Instagram de Claudio" class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white hover:scale-110 hover:brightness-110 transition">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/claudio-tomadin-alegre-monta%C3%B1es-719361316/" target="_blank" aria-label="LinkedIn de Claudio" class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 transition">
-            <i class="fa-brands fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com/claudio-caio" target="_blank" aria-label="GitHub de Claudio" class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-900 hover:scale-110 transition">
-            <i class="fa-brands fa-github"></i>
-          </a>
+      <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+        <div class="p-5 sm:p-6 lg:p-8">
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+            <div class="relative">
+              <img 
+                src="{% static 'img/caio.webp' %}" 
+                alt="Foto de Claudio Caio – Desarrollador FullStack"
+                class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-orange-300 shadow-lg"
+              >
+              <div class="absolute -bottom-2 -right-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                Dev
+              </div>
+            </div>
+            
+            <div class="flex-1 text-center sm:text-left">
+              <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-1">Claudio Tomadín</h3>
+              <p class="text-orange-600 font-medium text-sm sm:text-base mb-2 sm:mb-3">
+                Téc. Electromecánico • Ing. Electromecánica (en curso) • FullStack Dev
+              </p>
+              <p class="text-gray-600 text-sm mb-3 sm:mb-4">
+                Une electromecánica, desarrollo y diseño para crear experiencias digitales funcionales y visualmente atractivas.
+              </p>
+              
+              <div class="flex justify-center sm:justify-start gap-3">
+                <a href="https://www.instagram.com/caioalegres/" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white hover:scale-110 hover:brightness-110 transition-all duration-200"
+                   aria-label="Instagram de Claudio">
+                  <i class="fa-brands fa-instagram text-sm sm:text-base"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/claudio-tomadin-alegre-monta%C3%B1es-719361316/" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 transition-all duration-200"
+                   aria-label="LinkedIn de Claudio">
+                  <i class="fa-brands fa-linkedin-in text-sm sm:text-base"></i>
+                </a>
+                <a href="https://github.com/claudio-caio" target="_blank" 
+                   class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-900 hover:scale-110 transition-all duration-200"
+                   aria-label="GitHub de Claudio">
+                  <i class="fa-brands fa-github text-sm sm:text-base"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- Estadísticas -->
-  <section class="grid md:grid-cols-4 gap-6 mb-16">
-    <div class="text-center p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl shadow-lg">
-      <div class="text-4xl font-bold mb-2">{{ total_vistas|default:"1.000+" }}</div>
-      <div class="text-sm uppercase tracking-wider">Visitas</div>
+  <section class="mb-12 sm:mb-16 lg:mb-20">
+    <div class="text-center mb-6 sm:mb-8">
+      <h3 class="text-xl sm:text-2xl font-bold text-orange-600 mb-2">Nuestro Impacto</h3>
+      <p class="text-gray-600 text-sm sm:text-base">Métricas que reflejan nuestro crecimiento</p>
     </div>
-    <div class="text-center p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl shadow-lg">
-      <div class="text-4xl font-bold mb-2">100+</div>
-      <div class="text-sm uppercase tracking-wider">Artículos</div>
-    </div>
-    <div class="text-center p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl shadow-lg">
-      <div class="text-4xl font-bold mb-2">50+</div>
-      <div class="text-sm uppercase tracking-wider">Usuarios</div>
-    </div>
-    <div class="text-center p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl shadow-lg">
-      <div class="text-4xl font-bold mb-2">24/7</div>
-      <div class="text-sm uppercase tracking-wider">Disponible</div>
+    
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+      <div class="text-center p-4 sm:p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-xl sm:rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">{{ total_vistas|default:"1.000+" }}</div>
+        <div class="text-xs sm:text-sm uppercase tracking-wider opacity-90">Visitas</div>
+      </div>
+      <div class="text-center p-4 sm:p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-xl sm:rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">100+</div>
+        <div class="text-xs sm:text-sm uppercase tracking-wider opacity-90">Artículos</div>
+      </div>
+      <div class="text-center p-4 sm:p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-xl sm:rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">50+</div>
+        <div class="text-xs sm:text-sm uppercase tracking-wider opacity-90">Usuarios</div>
+      </div>
+      <div class="text-center p-4 sm:p-6 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-xl sm:rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">24/7</div>
+        <div class="text-xs sm:text-sm uppercase tracking-wider opacity-90">Disponible</div>
+      </div>
     </div>
   </section>
 
   <!-- Call to Action -->
-  <section class="text-center bg-gradient-to-r from-orange-500 to-amber-500 text-white p-10 rounded-3xl shadow-2xl">
-    <h3 class="text-3xl font-bold mb-4">¿Querés ser parte de nuestra comunidad?</h3>
-    <p class="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
-      Únete a una red de personas que, como vos, creen en un mundo mejor para las mascotas.
-    </p>
-    <div class="flex flex-wrap justify-center gap-4">
-      {% if user.is_authenticated %}
-        <a href="{% url 'posts:articulo_crear' %}" 
-           class="px-8 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition">
-          Crear tu primer post
-        </a>
-      {% else %}
-        <a href="{% url 'usuarios:registro' %}" 
-           class="px-8 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition">
-          Registrarte ahora
-        </a>
-        <a href="{% url 'usuarios:login' %}" 
-           class="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-orange-600 transition">
-          Iniciar sesión
-        </a>
-      {% endif %}
+  <section class="text-center bg-gradient-to-r from-orange-500 to-amber-500 text-white p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl">
+    <div class="max-w-3xl mx-auto">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+        <span class="text-2xl sm:text-3xl">🐕</span>
+      </div>
+      <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">¿Querés ser parte de nuestra comunidad?</h3>
+      <p class="text-sm sm:text-base lg:text-lg mb-5 sm:mb-6 opacity-90">
+        Únete a una red de personas que, como vos, creen en un mundo mejor para las mascotas.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+        {% if user.is_authenticated %}
+          <a href="{% url 'posts:articulo_crear' %}" 
+             class="px-6 sm:px-8 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 inline-flex items-center justify-center">
+            <i class="fa-solid fa-pen-to-square mr-2"></i>
+            Crear tu primer post
+          </a>
+        {% else %}
+          <a href="{% url 'usuarios:registro' %}" 
+             class="px-6 sm:px-8 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 inline-flex items-center justify-center">
+            <i class="fa-solid fa-user-plus mr-2"></i>
+            Registrarte ahora
+          </a>
+          <a href="{% url 'usuarios:login' %}" 
+             class="px-6 sm:px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-orange-600 transition-all duration-200 inline-flex items-center justify-center">
+            <i class="fa-solid fa-right-to-bracket mr-2"></i>
+            Iniciar sesión
+          </a>
+        {% endif %}
+      </div>
     </div>
   </section>
 
 </div>
+
+<style>
+      /* Scrollbar personalizado */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fed7aa;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #f97316, #f59e0b);
+    border-radius: 5px;
+    border: 2px solid #fed7aa;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #ea580c, #d97706);
+  }
+</style>
+
+<!-- Estilos adicionales para mejorar responsividad -->
+<style>
+@media (max-width: 640px) {
+  .hover\\:-translate-y-1:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Mejorar legibilidad en móviles */
+@media (max-width: 768px) {
+  .text-shadow-sm {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+}
+
+/* Smooth animations */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>
+
 {% endblock content %}

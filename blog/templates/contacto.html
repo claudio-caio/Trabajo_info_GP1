@@ -4,7 +4,7 @@
 {% block title %}Contáctanos – PetBlog{% endblock title %}
 
 {% block banner %}
-<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
+<section class="relative w-full h-[280px] sm:h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
   <img 
     src="{% static 'img/banner3.webp' %}" 
     alt="Contáctanos – Equipo de PetBlog"
@@ -13,168 +13,278 @@
     class="w-full h-full object-cover"
   >
   <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
-      Contáctanos
-    </h1>
+    <div class="text-center px-4">
+      <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide drop-shadow-xl mb-3">
+        Contáctanos
+      </h1>
+      <p class="text-white text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto drop-shadow-lg px-2">
+        Tu opinión es importante para nosotros
+      </p>
+    </div>
   </div>
 </section>
 {% endblock banner %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
 
   <!-- Introducción -->
-  <div class="text-center mb-12">
-    <h2 class="text-3xl md:text-4xl font-bold text-orange-600 mb-4">
-      💌 ¿Tienes algo que decirnos?
+  <div class="text-center mb-10 sm:mb-12 lg:mb-16">
+    <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-orange-100 rounded-full mb-4">
+      <span class="text-2xl sm:text-3xl">💌</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-orange-600 mb-3 sm:mb-4">
+      ¿Tienes algo que decirnos?
     </h2>
-    <p class="text-gray-700 text-lg max-w-2xl mx-auto">
+    <p class="text-gray-700 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-2">
       Nos encantaría saber de ti. Ya sea una sugerencia, pregunta, error o idea para mejorar,
       estamos atentos a tu mensaje.
     </p>
+    <div class="h-1 w-24 sm:w-32 bg-gradient-to-r from-orange-400 to-amber-400 mx-auto rounded-full mt-4 sm:mt-6"></div>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-10">
+  <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
 
     <!-- Formulario -->
-    <div class="bg-white p-8 rounded-3xl shadow-lg border border-orange-200">
-      <h3 class="text-2xl font-bold text-orange-700 mb-6">Envíanos un mensaje</h3>
+    <div class="bg-white p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200 hover:shadow-xl transition-all duration-300">
+      <div class="flex items-center mb-5 sm:mb-6 lg:mb-8">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89-4.26a2 2 0 012.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-orange-700">Envíanos un mensaje</h3>
+      </div>
 
       {% if messages %}
         {% for message in messages %}
-          <div class="p-4 mb-5 rounded-xl 
-            {% if message.tags == 'success' %} bg-green-100 text-green-800
-            {% elif message.tags == 'error' %} bg-red-100 text-red-800
-            {% else %} bg-blue-100 text-blue-800 {% endif %}">
-            {{ message }}
+          <div class="p-4 mb-5 rounded-xl flex items-start 
+            {% if message.tags == 'success' %} bg-green-50 border border-green-200 text-green-800
+            {% elif message.tags == 'error' %} bg-red-50 border border-red-200 text-red-800
+            {% else %} bg-blue-50 border border-blue-200 text-blue-800 {% endif %}">
+            <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+              <p class="font-medium">{{ message }}</p>
+            </div>
           </div>
         {% endfor %}
       {% endif %}
 
-      <form id="contactForm" method="post" class="space-y-5">
+      <form id="contactForm" method="post" class="space-y-4 sm:space-y-5">
         {% csrf_token %}
 
         <div>
-          <label for="nombre" class="block font-semibold text-gray-800 mb-2">Nombre completo *</label>
-          <input 
-            type="text" 
-            id="nombre"
-            name="nombre" 
-            required
-            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
-            placeholder="Ej. María López"
-          >
+          <label for="nombre" class="block font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Nombre completo *</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="nombre"
+              name="nombre" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm sm:text-base"
+              placeholder="Ej. María López"
+            >
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div>
-          <label for="email" class="block font-semibold text-gray-800 mb-2">Correo electrónico *</label>
-          <input 
-            type="email" 
-            id="email"
-            name="email" 
-            required
-            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
-            placeholder="tu@email.com"
-          >
+          <label for="email" class="block font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Correo electrónico *</label>
+          <div class="relative">
+            <input 
+              type="email" 
+              id="email"
+              name="email" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 text-sm sm:text-base"
+              placeholder="tu@email.com"
+            >
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89-4.26a2 2 0 012.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div>
-          <label for="asunto" class="block font-semibold text-gray-800 mb-2">Asunto *</label>
-          <select 
-            id="asunto"
-            name="asunto" 
-            required
-            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition"
-          >
-            <option value="">Selecciona un asunto</option>
-            <option value="consulta">Consulta general</option>
-            <option value="sugerencia">Sugerencia de mejora</option>
-            <option value="reporte">Reportar error o problema</option>
-            <option value="colaboracion">Propuesta de colaboración</option>
-            <option value="otro">Otro</option>
-          </select>
+          <label for="asunto" class="block font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Asunto *</label>
+          <div class="relative">
+            <select 
+              id="asunto"
+              name="asunto" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 appearance-none text-sm sm:text-base bg-white"
+            >
+              <option value="">Selecciona un asunto</option>
+              <option value="consulta">Consulta general</option>
+              <option value="sugerencia">Sugerencia de mejora</option>
+              <option value="reporte">Reportar error o problema</option>
+              <option value="colaboracion">Propuesta de colaboración</option>
+              <option value="otro">Otro</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div>
-          <label for="mensaje" class="block font-semibold text-gray-800 mb-2">Mensaje *</label>
+          <label for="mensaje" class="block font-semibold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Mensaje *</label>
           <textarea 
             id="mensaje"
             name="mensaje" 
-            rows="5" 
+            rows="4" 
             required
-            class="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition resize-none"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 resize-y text-sm sm:text-base"
             placeholder="Cuéntanos con detalle tu inquietud..."
           ></textarea>
+          <div class="flex justify-between items-center mt-2">
+            <span class="text-xs text-gray-500">Mínimo 20 caracteres</span>
+            <span class="text-xs text-gray-500" id="charCount">0/1000</span>
+          </div>
         </div>
 
         <button 
           type="submit"
-          class="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+          class="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 text-sm sm:text-base"
         >
-          Enviar mensaje
+          <span class="flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            Enviar mensaje
+          </span>
         </button>
+
+        <p class="text-xs text-gray-500 text-center mt-3">
+          Te responderemos en un plazo máximo de 48 horas hábiles
+        </p>
       </form>
     </div>
 
     <!-- Información de contacto -->
-    <div class="space-y-6">
+    <div class="space-y-6 sm:space-y-8">
 
       <!-- Datos de contacto -->
-      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-8 rounded-3xl shadow-lg border border-orange-200">
-        <h3 class="text-2xl font-bold text-orange-700 mb-5">Información de contacto</h3>
+      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200">
+        <div class="flex items-center mb-4 sm:mb-5 lg:mb-6">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold text-orange-700">Información de contacto</h3>
+        </div>
         
-        <div class="space-y-5">
-          <div class="flex items-start gap-4">
-            <span class="text-3xl" aria-hidden="true">📧</span>
-            <div>
-              <h4 class="font-semibold text-gray-800">Correo electrónico</h4>
-              <a href="mailto:petblog@info2025.com" class="text-orange-600 hover:underline font-medium">
+        <div class="space-y-4 sm:space-y-5">
+          <div class="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/50 rounded-xl hover:bg-white/80 transition-colors duration-200">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-lg sm:text-xl">📧</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-gray-800 text-sm sm:text-base mb-1">Correo electrónico</h4>
+              <a href="mailto:petblog@info2025.com" class="text-orange-600 hover:text-orange-800 font-medium text-sm sm:text-base inline-flex items-center">
                 petblog@info2025.com
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
               </a>
             </div>
           </div>
 
-          <div class="flex items-start gap-4">
-            <span class="text-3xl" aria-hidden="true">📍</span>
-            <div>
-              <h4 class="font-semibold text-gray-800">Ubicación</h4>
-              <p class="text-gray-700">
+          <div class="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/50 rounded-xl hover:bg-white/80 transition-colors duration-200">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-lg sm:text-xl">📍</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-gray-800 text-sm sm:text-base mb-1">Ubicación</h4>
+              <p class="text-gray-700 text-sm sm:text-base">
                 Grupo 01 – Informatorio 2025<br>
                 Resistencia, Chaco, Argentina
               </p>
             </div>
           </div>
 
-          <div class="flex items-start gap-4">
-            <span class="text-3xl" aria-hidden="true">🕒</span>
-            <div>
-              <h4 class="font-semibold text-gray-800">Soporte</h4>
-              <p class="text-gray-700">Respuesta en 24–48 horas hábiles</p>
+          <div class="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/50 rounded-xl hover:bg-white/80 transition-colors duration-200">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-lg sm:text-xl">🕒</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-gray-800 text-sm sm:text-base mb-1">Tiempo de respuesta</h4>
+              <p class="text-gray-700 text-sm sm:text-base">Respuesta en 24–48 horas hábiles</p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- FAQ útil -->
-      <div class="bg-white p-8 rounded-3xl shadow-lg border border-orange-200">
-        <h3 class="text-xl font-bold text-orange-700 mb-4">Preguntas frecuentes</h3>
-        <div class="space-y-3 text-gray-700">
-
-          <details class="group">
-            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Responden todos los mensajes?</summary>
-            <p class="mt-2 text-sm pl-4">Sí, nos comprometemos a responder todos los mensajes relevantes en menos de 48 horas.</p>
+      <div class="bg-white p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200">
+        <div class="flex items-center mb-4 sm:mb-5 lg:mb-6">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold text-orange-700">Preguntas frecuentes</h3>
+        </div>
+        
+        <div class="space-y-3">
+          <details class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-3 sm:p-4 transition-colors duration-200">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-orange-600 transition-colors duration-200 flex items-center justify-between text-sm sm:text-base">
+              <span>¿Responden todos los mensajes?</span>
+              <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <p class="mt-3 text-gray-600 text-sm sm:text-base pl-2">Sí, nos comprometemos a responder todos los mensajes relevantes en menos de 48 horas hábiles.</p>
           </details>
 
-          <details class="group">
-            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Puedo reportar contenido inadecuado?</summary>
-            <p class="mt-2 text-sm pl-4">Claro. Usa el asunto “Reportar error o problema” y describe el contenido o enlace afectado.</p>
+          <details class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-3 sm:p-4 transition-colors duration-200">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-orange-600 transition-colors duration-200 flex items-center justify-between text-sm sm:text-base">
+              <span>¿Puedo reportar contenido inadecuado?</span>
+              <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <p class="mt-3 text-gray-600 text-sm sm:text-base pl-2">Claro. Usa el asunto "Reportar error o problema" y describe el contenido o enlace afectado.</p>
           </details>
 
-          <details class="group">
-            <summary class="cursor-pointer font-semibold hover:text-orange-600 transition">¿Este proyecto es comercial?</summary>
-            <p class="mt-2 text-sm pl-4">No. Es un proyecto educativo sin fines de lucro, desarrollado por estudiantes del Informatorio 2025.</p>
+          <details class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-3 sm:p-4 transition-colors duration-200">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-orange-600 transition-colors duration-200 flex items-center justify-between text-sm sm:text-base">
+              <span>¿Este proyecto es comercial?</span>
+              <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <p class="mt-3 text-gray-600 text-sm sm:text-base pl-2">No. Es un proyecto educativo sin fines de lucro, desarrollado por estudiantes del Informatorio 2025.</p>
           </details>
+        </div>
+      </div>
 
+      <!-- Tarjeta adicional -->
+      <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-lg">
+        <div class="flex items-start gap-3 sm:gap-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm sm:text-base mb-1 sm:mb-2">Tu privacidad es importante</h4>
+            <p class="text-white/90 text-xs sm:text-sm">
+              No compartiremos tu información con terceros. Todos los datos se manejan con confidencialidad y solo se utilizan para responder tu consulta.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -185,12 +295,135 @@
 </div>
 
 <script>
-// Solo para demostración en frontend
-document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-  e.preventDefault();
-  alert('✅ ¡Gracias por tu mensaje!\n\nEn una versión funcional, este formulario enviaría tus datos al equipo del blog.');
-  this.reset();
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contactForm');
+  const messageTextarea = document.getElementById('mensaje');
+  const charCount = document.getElementById('charCount');
+  
+  // Contador de caracteres para el mensaje
+  if (messageTextarea && charCount) {
+    messageTextarea.addEventListener('input', function() {
+      const length = this.value.length;
+      charCount.textContent = `${length}/1000`;
+      
+      if (length > 900) {
+        charCount.classList.remove('text-gray-500');
+        charCount.classList.add('text-red-500', 'font-semibold');
+      } else if (length > 700) {
+        charCount.classList.remove('text-gray-500', 'text-red-500', 'font-semibold');
+        charCount.classList.add('text-amber-500');
+      } else {
+        charCount.classList.remove('text-amber-500', 'text-red-500', 'font-semibold');
+        charCount.classList.add('text-gray-500');
+      }
+    });
+    
+    // Actualizar contador inicial
+    charCount.textContent = `${messageTextarea.value.length}/1000`;
+  }
+  
+  // Validación de formulario básica
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      const nombre = document.getElementById('nombre').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const asunto = document.getElementById('asunto').value;
+      const mensaje = document.getElementById('mensaje').value.trim();
+      
+      // Validaciones básicas
+      if (nombre.length < 2) {
+        alert('Por favor ingresa tu nombre completo');
+        e.preventDefault();
+        return false;
+      }
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Por favor ingresa un correo electrónico válido');
+        e.preventDefault();
+        return false;
+      }
+      
+      if (!asunto) {
+        alert('Por favor selecciona un asunto para tu mensaje');
+        e.preventDefault();
+        return false;
+      }
+      
+      if (mensaje.length < 20) {
+        alert('Por favor escribe un mensaje más detallado (mínimo 20 caracteres)');
+        e.preventDefault();
+        return false;
+      }
+      
+      // Feedback visual de envío
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.innerHTML = `
+          <span class="flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Enviando...
+          </span>
+        `;
+        submitBtn.disabled = true;
+      }
+    });
+  }
+  
+  // Mejorar estilo de los inputs
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    el.addEventListener('focus', function() {
+      this.parentElement.classList.add('ring-2', 'ring-orange-200');
+    });
+    
+    el.addEventListener('blur', function() {
+      this.parentElement.classList.remove('ring-2', 'ring-orange-200');
+    });
+  });
 });
 </script>
+
+<style>
+
+  /* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fed7aa;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #f59e0b);
+  border-radius: 5px;
+  border: 2px solid #fed7aa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ea580c, #d97706);
+}
+
+
+/* Animaciones para detalles FAQ */
+details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+
+/* Estilos para select personalizado */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+</style>
 
 {% endblock content %}

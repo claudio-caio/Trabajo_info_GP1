@@ -1,9 +1,9 @@
 {% extends 'layouts/general-layout.html' %}
 {% load static %}
-{% block title %}Iniciar Sesión{% endblock title %}
+{% block title %}Iniciar Sesión - Blog de Mascotas{% endblock title %}
 
 {% block banner %}
-<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden ">
+<section class="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden">
 
   <!-- Imagen -->
   <img 
@@ -16,78 +16,377 @@
 
   <!-- Contenido centrado -->
   <div class="absolute inset-0 flex items-center justify-center bg-black/40">
-    <h1 class="text-white text-4xl md:text-6xl font-extrabold tracking-wide drop-shadow-xl">
-      Bienvenido de Nuevo
-    </h1>
+    <div class="text-center px-4">
+      <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide drop-shadow-2xl mb-4">
+        Bienvenido de Nuevo
+      </h1>
+      <p class="text-white text-base sm:text-lg md:text-xl font-medium max-w-2xl mx-auto drop-shadow-lg px-2">
+        Accede a tu cuenta y continúa compartiendo
+      </p>
+    </div>
   </div>
 
 </section>
 {% endblock banner %}
+
 {% block content %}
-<div class="max-w-md mx-auto mt-16 p-8 bg-white rounded-3xl shadow-xl">
+<div class="max-w-2xl mx-auto px-4 py-12">
+  
+  <!-- Tarjeta principal -->
+  <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-3xl mb-8">
+    
+    <!-- Encabezado -->
+    <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-8 md:p-10 text-center relative overflow-hidden">
+      <!-- Elementos decorativos -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400"></div>
+      <div class="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full"></div>
+      <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full"></div>
+      
+      <div class="relative z-10">
+        <div class="w-20 h-20 rounded-full bg-white/20 border-4 border-white/30 flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+          <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold text-white mb-2">Iniciar Sesión</h2>
+        <p class="text-white/90 text-lg">Accede a tu cuenta de Blog de Mascotas</p>
+      </div>
+    </div>
 
-    <!-- Título -->
-    <h2 class="text-3xl font-bold text-center text-orange-500 mb-6">
-        Iniciar Sesión
-    </h2>
-
-    <!-- Mensajes -->
-    {% if messages %}
+    <!-- Contenido -->
+    <div class="p-8 md:p-10">
+      <!-- Mensajes -->
+      {% if messages %}
+      <div class="mb-8">
         {% for message in messages %}
-            <div class="p-3 mb-4 rounded-lg text-white
-                        {% if message.tags == 'success' %} bg-green-500
-                        {% elif message.tags == 'error' %} bg-red-500
-                        {% else %} bg-gray-500 {% endif %}">
-                {{ message }}
-            </div>
+        <div class="animate-fade-in-down flex items-start gap-4 p-4 mb-4 rounded-xl 
+          {% if message.tags == 'success' %} bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-800
+          {% elif message.tags == 'error' %} bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 text-red-800
+          {% elif message.tags == 'warning' %} bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-800
+          {% else %} bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 text-blue-800 {% endif %}">
+          <div class="text-2xl flex-shrink-0">
+            {% if message.tags == 'success' %} ✅
+            {% elif message.tags == 'error' %} ❌
+            {% elif message.tags == 'warning' %} ⚠️
+            {% else %} ℹ️ {% endif %}
+          </div>
+          <div class="flex-1">
+            <p class="font-medium">{{ message }}</p>
+          </div>
+        </div>
         {% endfor %}
-    {% endif %}
+      </div>
+      {% endif %}
 
-    <form method="post" novalidate class="space-y-5">
+      <form method="post" novalidate class="space-y-8">
         {% csrf_token %}
 
-        <!-- Usuario -->
-        <div>
-            <label class="block text-gray-700 font-semibold mb-2">Nombre de usuario</label>
-            <input type="text" name="{{ form.username.name }}" 
-                   value="{{ form.username.value }}" 
-                   class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-sm transition" 
-                   placeholder="Ingresa tu usuario">
-            {% if form.username.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ form.username.errors }}</p>
-            {% endif %}
+        <!-- Campo de usuario -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-orange-700">
+              Nombre de usuario
+              <span class="text-red-500">*</span>
+            </label>
+            <span class="text-xs text-gray-500">Requerido</span>
+          </div>
+          
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <input type="text" 
+                   name="{{ form.username.name }}" 
+                   value="{{ form.username.value|default:'' }}" 
+                   class="w-full pl-12 pr-4 py-3.5 bg-white border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition group-hover:border-orange-400 placeholder-gray-400"
+                   placeholder="Ingresa tu nombre de usuario"
+                   autocomplete="username"
+                   required>
+          </div>
+          
+          {% if form.username.errors %}
+          <div class="text-red-600 text-sm mt-1 flex items-center gap-1">
+            <span>⚠️</span> {{ form.username.errors|striptags }}
+          </div>
+          {% endif %}
         </div>
 
-        <!-- Contraseña -->
-        <div>
-            <label class="block text-gray-700 font-semibold mb-2">Contraseña</label>
-            <input type="password" name="{{ form.password.name }}" 
-                   class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-sm transition" 
-                   placeholder="Ingresa tu contraseña">
-            {% if form.password.errors %}
-                <p class="text-red-600 text-sm mt-1">{{ form.password.errors }}</p>
-            {% endif %}
+        <!-- Campo de contraseña -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-orange-700">
+              Contraseña
+              <span class="text-red-500">*</span>
+            </label>
+            <a href="#" class="text-xs text-orange-600 hover:text-orange-700 hover:underline font-medium">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+          
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <input type="password" 
+                   name="{{ form.password.name }}" 
+                   class="w-full pl-12 pr-12 py-3.5 bg-white border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition group-hover:border-orange-400 placeholder-gray-400"
+                   placeholder="Ingresa tu contraseña"
+                   autocomplete="current-password"
+                   required>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+              <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none" id="togglePassword">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          {% if form.password.errors %}
+          <div class="text-red-600 text-sm mt-1 flex items-center gap-1">
+            <span>⚠️</span> {{ form.password.errors|striptags }}
+          </div>
+          {% endif %}
+          
+          <div class="text-xs text-gray-500 flex items-center gap-2">
+            <span>🔒</span>
+            <span>Tu contraseña está encriptada y protegida</span>
+          </div>
         </div>
 
         {% if next %}
-            <input type="hidden" name="next" value="{{ next }}">
+          <input type="hidden" name="next" value="{{ next }}">
         {% endif %}
 
-        <!-- Botón -->
+        <!-- Botón de inicio de sesión -->
         <button type="submit" 
-                class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md transition-all">
-            Ingresar
+                class="group w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          <svg class="w-5 h-5 relative z-10 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+          </svg>
+          <span class="relative z-10">Iniciar Sesión</span>
         </button>
-    </form>
+      </form>
 
-    <!-- Registro -->
-    <p class="text-center text-gray-700 mt-5">
-        ¿No tienes cuenta? 
-        <a href="{% url 'usuarios:registro' %}" class="text-orange-500 hover:underline font-semibold">
-            Regístrate aquí
+      <!-- Separador -->
+      <div class="flex items-center my-8">
+        <div class="flex-1 h-px bg-gray-300"></div>
+        <span class="px-4 text-sm text-gray-500">O continúa con</span>
+        <div class="flex-1 h-px bg-gray-300"></div>
+      </div>
+
+      <!-- Enlaces adicionales -->
+      <div class="text-center space-y-4">
+        <p class="text-gray-700">
+          ¿No tienes cuenta aún?
+        </p>
+        <a href="{% url 'usuarios:registro' %}" 
+           class="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 font-bold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+          </svg>
+          Crear una nueva cuenta
         </a>
+      </div>
+
+      <!-- Información de seguridad -->
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-900 mb-1">Tu seguridad es importante</p>
+            <p class="text-xs text-gray-600">Usamos encriptación de extremo a extremo para proteger tus datos. Nunca compartimos tu información personal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beneficios de la cuenta -->
+  <div class="grid md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <h3 class="font-bold text-gray-900 mb-2">Comparte Artículos</h3>
+      <p class="text-sm text-gray-600">Publica tus experiencias y consejos sobre mascotas con la comunidad.</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <h3 class="font-bold text-gray-900 mb-2">Participa en Comentarios</h3>
+      <p class="text-sm text-gray-600">Interactúa con otros amantes de mascotas y comparte tus opiniones.</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-200">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center mb-4">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <h3 class="font-bold text-gray-900 mb-2">Personaliza tu Perfil</h3>
+      <p class="text-sm text-gray-600">Crea tu perfil único y comparte tus experiencias con mascotas.</p>
+    </div>
+  </div>
+
+  <!-- Mensaje de bienvenida -->
+  <div class="text-center">
+    <p class="text-gray-600 mb-2">
+      ¡La comunidad de amantes de mascotas te espera! 🐕🐈
     </p>
+    <p class="text-gray-500 text-sm">
+      Si tienes problemas para acceder, contacta a nuestro 
+      <a href="#" class="text-orange-600 hover:underline font-medium">equipo de soporte</a>.
+    </p>
+  </div>
+
 </div>
+
+<!-- Script para funcionalidades -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Alternar visibilidad de contraseña
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.querySelector('input[name="password"]');
+  
+  if (togglePassword && passwordInput) {
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // Cambiar icono
+      const icon = this.querySelector('svg');
+      if (type === 'text') {
+        icon.innerHTML = '<path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.049 10.049 0 011.582-3.225m12.552 0a10.047 10.047 0 011.582 3.225c-1.274 4.057-5.064 7-9.542 7a10.05 10.05 0 01-1.875-.175M9.879 7.519A3 3 0 0112 7c1.657 0 3 .895 3 2s-1.343 2-3 2-3 .895-3 2a2.99 2.99 0 01-.121-.756m6 .364A3 3 0 0015 9a2.99 2.99 0 00-1.121.756"/><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>';
+      } else {
+        icon.innerHTML = '<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>';
+      }
+    });
+  }
+
+  // Validación en tiempo real
+  const usernameInput = document.querySelector('input[name="username"]');
+  
+  function validateField(input) {
+    if (input.value.trim() === '') {
+      input.classList.add('border-red-500', 'bg-red-50');
+      input.classList.remove('border-orange-300');
+    } else {
+      input.classList.remove('border-red-500', 'bg-red-50');
+      input.classList.add('border-orange-300');
+    }
+  }
+  
+  if (usernameInput) {
+    usernameInput.addEventListener('blur', function() {
+      validateField(this);
+    });
+  }
+  
+  if (passwordInput) {
+    passwordInput.addEventListener('blur', function() {
+      validateField(this);
+    });
+  }
+
+  // Animar la tarjeta principal
+  const mainCard = document.querySelector('.bg-white.rounded-3xl');
+  if (mainCard) {
+    mainCard.style.opacity = '0';
+    mainCard.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      mainCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      mainCard.style.opacity = '1';
+      mainCard.style.transform = 'translateY(0)';
+    }, 100);
+  }
+
+  // Efecto de enfoque en los inputs
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(input => {
+    const parent = input.closest('.group');
+    if (parent) {
+      input.addEventListener('focus', function() {
+        parent.classList.add('ring-2', 'ring-orange-200', 'ring-opacity-50');
+      });
+      
+      input.addEventListener('blur', function() {
+        parent.classList.remove('ring-2', 'ring-orange-200', 'ring-opacity-50');
+      });
+    }
+  });
+});
+</script>
+
+<style>
+/* Animaciones */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out;
+}
+
+/* Efectos de transición */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Efectos hover mejorados */
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+/* Estilos para inputs */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fed7aa;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #f59e0b);
+  border-radius: 5px;
+  border: 2px solid #fed7aa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ea580c, #d97706);
+}
+</style>
 {% endblock content %}
-
-
